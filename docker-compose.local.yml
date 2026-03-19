@@ -1,0 +1,49 @@
+services:
+  postgres:
+    image: postgres:17
+    container_name: extasy-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: extasy
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      TZ: Europe/Kyiv
+      PGTZ: Europe/Kyiv
+    ports:
+      - '5432:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U postgres -d extasy']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    networks:
+      - extasy-net
+
+  redis:
+    image: redis:7.4
+    container_name: extasy-redis
+    restart: unless-stopped
+    command: ['redis-server', '--appendonly', 'yes', '--requirepass', 'password']
+    ports:
+      - '6379:6379'
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ['CMD-SHELL', 'redis-cli -a password ping | grep PONG']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+    networks:
+      - extasy-net
+
+volumes:
+  postgres_data:
+  redis_data:
+
+networks:
+  extasy-net:
+    driver: bridge
