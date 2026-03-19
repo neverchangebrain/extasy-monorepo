@@ -9,7 +9,7 @@
   "scripts": {
     "check": "bun run check:apps && bun run check:packages",
     "check:apps": "bun --filter @extasy/staff-bot check && bun --filter @extasy/assistant-bot check && bun --filter @extasy/event-bot check && bun --filter @extasy/close-bot check && bun --filter @extasy/economy-bot check && bun --filter @extasy/mod-bot check",
-    "check:packages": "bun --filter @extasy/shared check && bun --filter @extasy/db check",
+    "check:packages": "bun --filter @extasy/shared check && bun --filter @extasy/db check && bun --filter @extasy/redis check",
     "dev:assistant": "bun --watch apps/assistant-bot/src/index.ts",
     "dev:close": "bun --watch apps/close-bot/src/index.ts",
     "dev:economy": "bun --watch apps/economy-bot/src/index.ts",
