@@ -1,0 +1,29 @@
+{
+  "name": "extasy-monorepo",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "check": "bun run check:apps && bun run check:packages",
+    "check:apps": "bun --filter @extasy/staff-bot check && bun --filter @extasy/assistant-bot check && bun --filter @extasy/event-bot check && bun --filter @extasy/close-bot check && bun --filter @extasy/economy-bot check && bun --filter @extasy/mod-bot check",
+    "check:packages": "bun --filter @extasy/shared check && bun --filter @extasy/db check",
+    "dev:assistant": "bun --filter @extasy/assistant-bot dev",
+    "dev:close": "bun --filter @extasy/close-bot dev",
+    "dev:economy": "bun --filter @extasy/economy-bot dev",
+    "dev:event": "bun --filter @extasy/event-bot dev",
+    "dev:mod": "bun --filter @extasy/mod-bot dev",
+    "dev:staff": "bun --filter @extasy/staff-bot dev",
+    "format": "bunx prettier . --write"
+  },
+  "devDependencies": {
+    "@trivago/prettier-plugin-sort-imports": "^6.0.2",
+    "@types/bun": "latest",
+    "prettier": "^3.6.2",
+    "prettier-plugin-organize-imports": "^4.3.0",
+    "prettier-plugin-packagejson": "^3.0.2",
+    "typescript": "^5.9.2"
+  }
+}

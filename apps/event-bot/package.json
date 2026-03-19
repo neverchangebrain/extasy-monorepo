@@ -1,0 +1,19 @@
+{
+  "name": "@extasy/event-bot",
+  "private": true,
+  "type": "module",
+  "module": "src/index.ts",
+  "scripts": {
+    "check": "tsc -p tsconfig.json --noEmit",
+    "dev": "bun --watch src/index.ts",
+    "start": "bun src/index.ts"
+  },
+  "dependencies": {
+    "@extasy/db": "workspace:*",
+    "@extasy/shared": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "typescript": "^5.9.2"
+  }
+}
