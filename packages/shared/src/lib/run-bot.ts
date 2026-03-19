@@ -1,9 +1,12 @@
 import {
   Client,
   type ClientOptions,
+  Events,
   GatewayIntentBits,
   Partials,
 } from 'discord.js';
+
+import 'dotenv/config';
 
 type RunBotOptions = {
   botName: string;
@@ -34,7 +37,7 @@ export async function runBot({
     ...options,
   });
 
-  client.once('ready', () => {
+  client.once(Events.ClientReady, () => {
     console.info(`[${botName}] ready as ${client.user?.tag ?? 'unknown-user'}`);
   });
 
