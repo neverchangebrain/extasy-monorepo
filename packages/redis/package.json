@@ -1,0 +1,22 @@
+{
+  "name": "@extasy/redis",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "module": "src/index.ts",
+  "types": "src/index.ts",
+  "scripts": {
+    "check": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "dotenv": "^16.6.1",
+    "ioredis": "^5.8.1",
+    "zod": "^4.1.5"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "typescript": "^5.9.2"
+  }
+}
