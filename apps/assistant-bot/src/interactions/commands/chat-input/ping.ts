@@ -8,7 +8,6 @@ const command = new SlashCommandBuilder()
 
 export default new ChatInputCommandHandler(command, async (interaction) => {
   await interaction.reply({
-    ephemeral: true,
-    content: '🟢',
+    content: 'the fuck pong!',
   });
 });

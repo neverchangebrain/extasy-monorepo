@@ -10,3 +10,5 @@ export { isDevelopment } from './env';
 
 export * from './files/interactions-file-manager';
 export * from './files/temp-file-manager';
+
+export * from './deploy/deploy-commands';

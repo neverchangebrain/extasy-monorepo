@@ -1,5 +1,4 @@
 import type { CoreClient } from '../client';
-import { isDevelopment } from '../env';
 import { InteractionsFileManager } from '../files/interactions-file-manager';
 
 export const importInteractions = async (
@@ -10,7 +9,7 @@ export const importInteractions = async (
     await InteractionsFileManager.getChatInputCommands(interactionsDir);
 
   client.contextMenuMessageCommands =
-    await InteractionsFileManager.getGlobalContextMenuMessageCommands(
+    await InteractionsFileManager.getContextMenuMessageCommands(
       interactionsDir,
     );
 

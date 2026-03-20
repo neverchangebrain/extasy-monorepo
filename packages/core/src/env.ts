@@ -4,6 +4,7 @@ export const env = parseEnv(
   z.object({
     NODE_ENV: z.enum(['development', 'production']).default('development'),
     TEMP_DIR_PATH: z.string().default('./temp'),
+    GUILD_ID: z.string(),
   }),
 );
 

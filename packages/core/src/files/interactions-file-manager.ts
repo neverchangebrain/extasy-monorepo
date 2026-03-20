@@ -74,7 +74,7 @@ export class InteractionsFileManager {
   }
 
   // context menu message commands
-  static async getGlobalContextMenuMessageCommands(interactionsDir?: string) {
+  static async getContextMenuMessageCommands(interactionsDir?: string) {
     const FILE_PATH = getFilePaths(interactionsDir);
 
     return this.getCommandsFromDirectory<ContextMenuMessageCommandHandler>(
