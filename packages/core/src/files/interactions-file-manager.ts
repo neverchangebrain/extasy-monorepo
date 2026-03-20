@@ -48,8 +48,6 @@ export class InteractionsFileManager {
 
       if (!(command.default instanceof commandHandler)) continue;
 
-      logger.info(`loading command: ${command.default.metadata.name}`);
-
       if (
         asInternal &&
         !command.default.metadata.name.startsWith('internal-')

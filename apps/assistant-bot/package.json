@@ -14,7 +14,8 @@
     "@extasy/env": "workspace:*",
     "@extasy/logger": "workspace:*",
     "@extasy/redis": "workspace:*",
-    "discord.js": "^14.25.1"
+    "discord.js": "^14.25.1",
+    "zod": "^4.3.6"
   },
   "devDependencies": {
     "@types/bun": "latest",

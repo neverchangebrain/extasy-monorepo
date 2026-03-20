@@ -34,11 +34,11 @@ importInteractions(client, {
   interactionsDir: path.join(import.meta.dir, './interactions'),
 });
 
-// deployCommands(
-//   env.ASSISTANT_BOT_TOKEN,
-//   env.ASSISTANT_BOT_ID,
-//   path.join(import.meta.dir, './interactions'),
-// );
+deployCommands(
+  env.ASSISTANT_BOT_TOKEN,
+  env.ASSISTANT_BOT_ID,
+  path.join(import.meta.dir, './interactions'),
+);
 
 clientEvents.forEach((callback, event) => client.on(event, callback));
 client.login(env.ASSISTANT_BOT_TOKEN);

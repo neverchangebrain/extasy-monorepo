@@ -3,6 +3,7 @@ export * from './client';
 export * from './interactions';
 export * from './interactions/import-interactions';
 export * from './interactions/interaction-handler';
+export * from './interactions/continuity/base';
 
 export * from './event';
 
