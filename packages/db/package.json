@@ -14,11 +14,10 @@
     "studio": "bunx drizzle-kit studio --verbose"
   },
   "dependencies": {
-    "dotenv": "^16.6.1",
+    "@extasy/env": "workspace:*",
     "drizzle-kit": "^0.31.10",
     "drizzle-orm": "^0.44.6",
-    "postgres": "^3.4.7",
-    "zod": "^4.1.5"
+    "postgres": "^3.4.7"
   },
   "devDependencies": {
     "@types/bun": "latest",

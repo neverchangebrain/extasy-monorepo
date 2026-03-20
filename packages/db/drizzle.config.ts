@@ -1,20 +1,15 @@
 import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import dotenv from 'dotenv';
+import { loadDotenvFromRepoRoot, readRequiredEnv } from '@extasy/env';
 import { defineConfig } from 'drizzle-kit';
 
-dotenv.config({
-  path: resolve(fileURLToPath(new URL('.', import.meta.url)), '../../.env'),
+loadDotenvFromRepoRoot({
+  fileName: '.env',
+  startDir: resolve(fileURLToPath(new URL('.', import.meta.url)), '..'),
 });
 
-const databaseUrl = process.env.DATABASE_URL;
-
-if (!databaseUrl) {
-  throw new Error(
-    'DATABASE_URL is not defined. Expected it in the repo root .env (../../.env from packages/db).',
-  );
-}
+const databaseUrl = readRequiredEnv('DATABASE_URL');
 
 export default defineConfig({
   out: './drizzle',

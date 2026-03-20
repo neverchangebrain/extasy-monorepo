@@ -1,4 +1,5 @@
-export * from './app/create-discord-app';
+export * from './app/create-app';
+export * from './app/register-commands';
 
 export * from './interactions/types';
 export * from './interactions/continuity';

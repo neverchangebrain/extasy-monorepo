@@ -13,7 +13,7 @@ import type {
   InteractionLogger,
 } from '../interactions/types';
 
-export type CreateDiscordAppOptions<TDeps> = {
+type CreateAppOptions<TDeps> = {
   deps: TDeps;
   interactions: InteractionDefinitions<TDeps>;
 
@@ -23,15 +23,13 @@ export type CreateDiscordAppOptions<TDeps> = {
   logger?: InteractionLogger;
 };
 
-export type DiscordApp = {
+type App = {
   client: Client;
-  start: (token: string) => Promise<void>;
-  stop: () => Promise<void>;
+  start: (token: string) => Promise<unknown>;
+  stop: () => Promise<unknown>;
 };
 
-export function createDiscordApp<TDeps>(
-  opts: CreateDiscordAppOptions<TDeps>,
-): DiscordApp {
+export const createApp = <TDeps>(opts: CreateAppOptions<TDeps>): App => {
   const client =
     opts.client ??
     new Client(
@@ -53,11 +51,8 @@ export function createDiscordApp<TDeps>(
 
   return {
     client,
-    start: async (token: string) => {
-      await client.login(token);
-    },
-    stop: async () => {
-      client.destroy();
-    },
+
+    start: async (token: string) => await client.login(token),
+    stop: async () => client.destroy(),
   };
-}
+};
