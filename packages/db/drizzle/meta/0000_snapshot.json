@@ -1,27 +1,28 @@
 {
-  "id": "5551affc-508b-4243-8d23-c341c6f4116c",
+  "id": "57e4012e-3b67-42dc-8ab7-4ae5c9e741cd",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
-    "public.interactions": {
-      "name": "interactions",
+    "public.continuity": {
+      "name": "continuity",
       "schema": "",
       "columns": {
         "id": {
           "name": "id",
-          "type": "bigint",
+          "type": "uuid",
           "primaryKey": true,
-          "notNull": true
+          "notNull": true,
+          "default": "gen_random_uuid()"
         },
-        "command": {
-          "name": "command",
+        "name": {
+          "name": "name",
           "type": "varchar(256)",
           "primaryKey": false,
           "notNull": true
         },
-        "input": {
-          "name": "input",
+        "data": {
+          "name": "data",
           "type": "jsonb",
           "primaryKey": false,
           "notNull": false
@@ -32,12 +33,6 @@
           "primaryKey": false,
           "notNull": false,
           "default": "now()"
-        },
-        "user_id": {
-          "name": "user_id",
-          "type": "varchar(256)",
-          "primaryKey": false,
-          "notNull": true
         }
       },
       "indexes": {},

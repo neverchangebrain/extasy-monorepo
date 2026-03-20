@@ -1,0 +1,76 @@
+import { MessageComponentInteraction } from 'discord.js';
+
+import { continuity, db } from '@extasy/db';
+import { z } from 'zod';
+
+import type { CoreClient } from '../../client';
+
+export type ContinuityHandler<
+  T = any,
+  U extends MessageComponentInteraction = any,
+> = (ctx: { interaction: U; client: CoreClient; data: T }) => Promise<void>;
+
+export abstract class BaseContinuity<T> {
+  static decodeButtonId(buttonId: string) {
+    const [name, id] = buttonId.split(':');
+
+    if (!name || !id) {
+      throw new Error(`invalid button id: ${buttonId}`);
+    }
+
+    return { name, id };
+  }
+
+  public encodeButtonId(id: string) {
+    return `${this.metadata.name}:${id}`;
+  }
+
+  public handler: ContinuityHandler<T> | undefined = undefined;
+
+  constructor(
+    public schema: z.ZodType<T>,
+    public metadata: { name: string },
+  ) {}
+
+  public async getContext(id: string): Promise<T> {
+    const result = await db.query.continuity.findFirst({
+      where: (fields, { eq }) => eq(fields.id, id),
+    });
+
+    if (!result) {
+      throw new Error(
+        `No data found for continuity in db (${this.metadata.name}:${id})`,
+      );
+    }
+
+    try {
+      return this.schema.parse(result.data);
+    } catch (error) {
+      throw new Error(
+        `Got invalid continuity data from db, validation failed:\n${JSON.stringify(result.data, null, 2)}`,
+      );
+    }
+  }
+
+  public async create(data: T) {
+    const result = await db
+      .insert(continuity)
+      .values({ name: this.metadata.name, data })
+      .returning()
+      .then((rows) => rows[0]);
+
+    if (!result) {
+      throw new Error(
+        `Failed to create continuity context (${this.metadata.name})`,
+      );
+    }
+
+    const buttonId = this.encodeButtonId(result.id);
+
+    return {
+      id: result.id,
+      name: result.name,
+      buttonId,
+    };
+  }
+}

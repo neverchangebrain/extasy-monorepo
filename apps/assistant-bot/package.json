@@ -1,0 +1,23 @@
+{
+  "name": "@extasy/assistant-bot",
+  "private": true,
+  "type": "module",
+  "module": "src/index.ts",
+  "scripts": {
+    "check": "tsc -p tsconfig.json --noEmit",
+    "dev": "bun --watch src/index.ts",
+    "start": "bun src/index.ts"
+  },
+  "dependencies": {
+    "@extasy/core": "workspace:*",
+    "@extasy/db": "workspace:*",
+    "@extasy/env": "workspace:*",
+    "@extasy/logger": "workspace:*",
+    "@extasy/redis": "workspace:*",
+    "discord.js": "^14.25.1"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "typescript": "^5.9.2"
+  }
+}
