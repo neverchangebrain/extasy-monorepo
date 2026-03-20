@@ -1,15 +1,6 @@
-import 'dotenv/config';
-import { drizzle } from 'drizzle-orm/postgres-js';
-import postgres from 'postgres';
-import { z } from 'zod';
+import { drizzle } from 'drizzle-orm/node-postgres';
 
-const dbEnvSchema = z.object({
-  DATABASE_URL: z.string().url(),
-});
+import { env } from './env';
+import * as schema from './schemas';
 
-export function createDb() {
-  const env = dbEnvSchema.parse(process.env);
-  const client = postgres(env.DATABASE_URL, { prepare: false });
-
-  return drizzle({ client });
-}
+export const db = drizzle(env.DATABASE_URL, { schema });
