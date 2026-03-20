@@ -4,8 +4,7 @@ import {
   Routes,
 } from 'discord.js';
 
-import { parseEnv } from '@extasy/env';
-import { z } from 'zod';
+import { parseEnv, z } from '@extasy/env';
 
 import { type ApplicationCommandBuilder } from '../interactions/import-interactions';
 

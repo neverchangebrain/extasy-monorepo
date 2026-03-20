@@ -1,6 +1,5 @@
-import { parseEnv } from '@extasy/env';
+import { parseEnv, z } from '@extasy/env';
 import Redis from 'ioredis';
-import { z } from 'zod';
 
 export const env = parseEnv(
   z.object({

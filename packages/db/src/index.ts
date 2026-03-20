@@ -1,6 +1,5 @@
-import { parseEnv } from '@extasy/env';
+import { parseEnv, z } from '@extasy/env';
 import { drizzle } from 'drizzle-orm/node-postgres';
-import { z } from 'zod';
 
 import * as schema from './schemas';
 

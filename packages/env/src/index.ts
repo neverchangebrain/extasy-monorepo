@@ -4,11 +4,11 @@ import path from 'node:path';
 import dotenv from 'dotenv';
 import { z } from 'zod';
 
-type LoadDotenvResult =
+type LoadResult =
   | { loaded: true; path: string }
   | { loaded: false; path: null };
 
-type LoadDotenvOptions = {
+type LoadOptions = {
   fileName?: string;
   startDir?: string;
   maxDepth?: number;
@@ -29,9 +29,7 @@ const findUp = (fileName: string, startDir = process.cwd(), maxDepth = 10) => {
   return null;
 };
 
-const loadDotenvFromRepoRoot = (
-  opts: LoadDotenvOptions = {},
-): LoadDotenvResult => {
+export const loadFromRoot = (opts: LoadOptions = {}): LoadResult => {
   const fileName = opts.fileName ?? '.env';
   const startDir = opts.startDir ?? process.cwd();
   const maxDepth = opts.maxDepth ?? 10;
@@ -49,8 +47,10 @@ const loadDotenvFromRepoRoot = (
 
 export const parseEnv = <TSchema extends z.ZodTypeAny>(
   schema: TSchema,
-  opts: LoadDotenvOptions = {},
+  opts: LoadOptions = {},
 ): z.infer<TSchema> => {
-  loadDotenvFromRepoRoot(opts);
+  loadFromRoot(opts);
   return schema.parse(process.env);
 };
+
+export { z };
