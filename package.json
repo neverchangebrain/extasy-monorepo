@@ -7,6 +7,9 @@
     "packages/*"
   ],
   "scripts": {
+    "db:generate": "bun --filter @extasy/db generate",
+    "db:push": "bun --filter @extasy/db push",
+    "db:studio": "bun --filter @extasy/db studio",
     "dev:assistant": "bun --watch apps/assistant-bot/src/index.ts",
     "dev:close": "bun --watch apps/close-bot/src/index.ts",
     "dev:economy": "bun --watch apps/economy-bot/src/index.ts",

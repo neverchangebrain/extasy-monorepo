@@ -8,7 +8,10 @@
   "module": "src/index.ts",
   "types": "src/index.ts",
   "scripts": {
-    "check": "tsc -p tsconfig.json --noEmit"
+    "check": "tsc -p tsconfig.json --noEmit",
+    "generate": "bunx drizzle-kit generate",
+    "push": "bunx drizzle-kit push",
+    "studio": "bunx drizzle-kit studio --verbose"
   },
   "dependencies": {
     "dotenv": "^16.6.1",
