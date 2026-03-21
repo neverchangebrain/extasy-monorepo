@@ -19,9 +19,6 @@ export const importInteractions = async (
   client.buttonInteractions =
     await InteractionsFileManager.getButtonInteractions(interactionsDir);
 
-  client.selectMenuInteractions =
-    await InteractionsFileManager.getSelectMenuInteractions(interactionsDir);
-
   client.stringSelectMenuInteractions =
     await InteractionsFileManager.getStringSelectMenuInteractions(
       interactionsDir,

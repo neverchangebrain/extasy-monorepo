@@ -13,7 +13,7 @@ import {
 import confirmActionButton from '../buttons/confirm-action';
 import pingClickButton from '../buttons/generic/ping-click';
 import feedbackModal from '../modals/feedback-modal';
-import themeSelectMenu from '../select-menu/theme-select';
+import themeSelectMenu from '../select-menu/string/theme-select';
 import userPickSelectMenu from '../select-menu/user/user-pick';
 
 export const runExamplesSubcommand = async (

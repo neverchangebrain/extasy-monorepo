@@ -103,15 +103,6 @@ export class InteractionsFileManager {
     );
   }
 
-  static async getSelectMenuInteractions(interactionsDir?: string) {
-    const FILE_PATH = getFilePaths(interactionsDir);
-
-    return this.getCommandsFromDirectory<BaseContinuity<any>>(
-      FILE_PATH.SELECT_MENU_INTERACTIONS,
-      BaseContinuity,
-    );
-  }
-
   static async getStringSelectMenuInteractions(interactionsDir?: string) {
     const FILE_PATH = getFilePaths(interactionsDir);
 

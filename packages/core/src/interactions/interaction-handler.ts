@@ -131,9 +131,7 @@ export const interactionHandler = async (
 
     if (isAnySelectMenu) {
       const selectMenuInteraction = interaction.isStringSelectMenu()
-        ? (client.stringSelectMenuInteractions.get(
-            continuityInteraction.name,
-          ) ?? client.selectMenuInteractions.get(continuityInteraction.name))
+        ? client.stringSelectMenuInteractions.get(continuityInteraction.name)
         : interaction.isUserSelectMenu()
           ? client.userSelectMenuInteractions.get(continuityInteraction.name)
           : interaction.isRoleSelectMenu()

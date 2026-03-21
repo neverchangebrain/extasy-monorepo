@@ -19,7 +19,6 @@ export const getFilePaths = (interactionsDir = DEFAULT_INTERACTIONS_DIR) => ({
   BUTTON_INTERACTIONS: resolveDir(interactionsDir, './buttons'),
 
   // select menu interactions
-  SELECT_MENU_INTERACTIONS: resolveDir(interactionsDir, './select-menu'),
   STRING_SELECT_MENU_INTERACTIONS: resolveDir(
     interactionsDir,
     './select-menu/string',
