@@ -21,6 +21,16 @@ const command = new SlashCommandBuilder()
     subcommand
       .setName('continuity-select')
       .setDescription('Show continuity select menu interaction example'),
+  )
+  .addSubcommand((subcommand) =>
+    subcommand
+      .setName('continuity-user-select')
+      .setDescription('Show continuity user select menu interaction example'),
+  )
+  .addSubcommand((subcommand) =>
+    subcommand
+      .setName('continuity-modal')
+      .setDescription('Show continuity modal submit interaction example'),
   );
 
 export default new ChatInputCommandHandler(command, async (interaction) => {

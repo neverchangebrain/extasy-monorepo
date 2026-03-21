@@ -1,4 +1,4 @@
-import { MessageFlags } from 'discord.js';
+import { MessageFlags, type StringSelectMenuInteraction } from 'discord.js';
 
 import { BaseContinuity } from '@extasy/core';
 import { z } from 'zod';
@@ -7,7 +7,10 @@ const schema = z.object({
   title: z.string(),
 });
 
-class ThemeSelectMenu extends BaseContinuity<z.infer<typeof schema>> {
+class ThemeSelectMenu extends BaseContinuity<
+  z.infer<typeof schema>,
+  StringSelectMenuInteraction
+> {
   constructor() {
     super(schema, { name: 'theme-select' });
 

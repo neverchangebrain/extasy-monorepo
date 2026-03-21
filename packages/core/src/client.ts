@@ -6,6 +6,7 @@ import type {
   GenericButtonInteractionHandler,
 } from './interactions';
 import type { BaseContinuity } from './interactions/continuity/base';
+import type { BaseContinuityModal } from './interactions/continuity/modal';
 
 export interface CoreClient extends DiscordClient {
   chatInputCommands: Collection<string, ChatInputCommandHandler>;
@@ -18,5 +19,16 @@ export interface CoreClient extends DiscordClient {
     GenericButtonInteractionHandler
   >;
   buttonInteractions: Collection<string, BaseContinuity<any>>;
+  // legacy string select menu interactions (./select-menu)
   selectMenuInteractions: Collection<string, BaseContinuity<any>>;
+
+  // typed select menu interactions (./select-menu/<type>)
+  stringSelectMenuInteractions: Collection<string, BaseContinuity<any>>;
+  userSelectMenuInteractions: Collection<string, BaseContinuity<any>>;
+  roleSelectMenuInteractions: Collection<string, BaseContinuity<any>>;
+  channelSelectMenuInteractions: Collection<string, BaseContinuity<any>>;
+  mentionableSelectMenuInteractions: Collection<string, BaseContinuity<any>>;
+
+  // modal interactions (./modals)
+  modalInteractions: Collection<string, BaseContinuityModal<any>>;
 }

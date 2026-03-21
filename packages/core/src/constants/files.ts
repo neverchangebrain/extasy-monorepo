@@ -20,4 +20,27 @@ export const getFilePaths = (interactionsDir = DEFAULT_INTERACTIONS_DIR) => ({
 
   // select menu interactions
   SELECT_MENU_INTERACTIONS: resolveDir(interactionsDir, './select-menu'),
+  STRING_SELECT_MENU_INTERACTIONS: resolveDir(
+    interactionsDir,
+    './select-menu/string',
+  ),
+  USER_SELECT_MENU_INTERACTIONS: resolveDir(
+    interactionsDir,
+    './select-menu/user',
+  ),
+  ROLE_SELECT_MENU_INTERACTIONS: resolveDir(
+    interactionsDir,
+    './select-menu/role',
+  ),
+  CHANNEL_SELECT_MENU_INTERACTIONS: resolveDir(
+    interactionsDir,
+    './select-menu/channel',
+  ),
+  MENTIONABLE_SELECT_MENU_INTERACTIONS: resolveDir(
+    interactionsDir,
+    './select-menu/mentionable',
+  ),
+
+  // modal interactions
+  MODAL_INTERACTIONS: resolveDir(interactionsDir, './modals'),
 });

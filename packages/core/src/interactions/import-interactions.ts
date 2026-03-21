@@ -21,4 +21,32 @@ export const importInteractions = async (
 
   client.selectMenuInteractions =
     await InteractionsFileManager.getSelectMenuInteractions(interactionsDir);
+
+  client.stringSelectMenuInteractions =
+    await InteractionsFileManager.getStringSelectMenuInteractions(
+      interactionsDir,
+    );
+
+  client.userSelectMenuInteractions =
+    await InteractionsFileManager.getUserSelectMenuInteractions(
+      interactionsDir,
+    );
+
+  client.roleSelectMenuInteractions =
+    await InteractionsFileManager.getRoleSelectMenuInteractions(
+      interactionsDir,
+    );
+
+  client.channelSelectMenuInteractions =
+    await InteractionsFileManager.getChannelSelectMenuInteractions(
+      interactionsDir,
+    );
+
+  client.mentionableSelectMenuInteractions =
+    await InteractionsFileManager.getMentionableSelectMenuInteractions(
+      interactionsDir,
+    );
+
+  client.modalInteractions =
+    await InteractionsFileManager.getModalInteractions(interactionsDir);
 };

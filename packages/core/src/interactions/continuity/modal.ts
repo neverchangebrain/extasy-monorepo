@@ -1,19 +1,17 @@
-import { MessageComponentInteraction } from 'discord.js';
+import { ModalSubmitInteraction } from 'discord.js';
 
 import { continuity, db } from '@extasy/db';
 import { z } from 'zod';
 
 import type { CoreClient } from '../../client';
 
-export type ContinuityHandler<
-  T = any,
-  U extends MessageComponentInteraction = any,
-> = (ctx: { interaction: U; client: CoreClient; data: T }) => Promise<void>;
+export type ModalContinuityHandler<T = any> = (ctx: {
+  interaction: ModalSubmitInteraction;
+  client: CoreClient;
+  data: T;
+}) => Promise<void>;
 
-export abstract class BaseContinuity<
-  T,
-  U extends MessageComponentInteraction = MessageComponentInteraction,
-> {
+export abstract class BaseContinuityModal<T> {
   static decodeCustomId(customId: string) {
     const [name, id] = customId.split(':');
 
@@ -24,15 +22,11 @@ export abstract class BaseContinuity<
     return { name, id };
   }
 
-  static decodeButtonId(buttonId: string) {
-    return this.decodeCustomId(buttonId);
-  }
-
-  public encodeButtonId(id: string) {
+  public encodeCustomId(id: string) {
     return `${this.metadata.name}:${id}`;
   }
 
-  public handler: ContinuityHandler<T, U> | undefined = undefined;
+  public handler: ModalContinuityHandler<T> | undefined = undefined;
 
   constructor(
     public schema: z.ZodType<T>,
@@ -52,7 +46,7 @@ export abstract class BaseContinuity<
 
     try {
       return this.schema.parse(result.data);
-    } catch (error) {
+    } catch {
       throw new Error(
         `Got invalid continuity data from db, validation failed:\n${JSON.stringify(result.data, null, 2)}`,
       );
@@ -72,12 +66,12 @@ export abstract class BaseContinuity<
       );
     }
 
-    const buttonId = this.encodeButtonId(result.id);
+    const customId = this.encodeCustomId(result.id);
 
     return {
       id: result.id,
       name: result.name,
-      buttonId,
+      customId,
     };
   }
 }

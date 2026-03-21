@@ -11,18 +11,21 @@ import {
   GenericButtonInteractionHandler,
 } from '../interactions';
 import { BaseContinuity } from '../interactions/continuity/base';
+import { BaseContinuityModal } from '../interactions/continuity/modal';
 
 type CommandHandler =
   | ChatInputCommandHandler
   | ContextMenuMessageCommandHandler
   | GenericButtonInteractionHandler
-  | BaseContinuity<any>;
+  | BaseContinuity<any>
+  | BaseContinuityModal<any>;
 
 type CommandHandlerClass =
   | typeof ChatInputCommandHandler
   | typeof ContextMenuMessageCommandHandler
   | typeof GenericButtonInteractionHandler
-  | typeof BaseContinuity<any>;
+  | typeof BaseContinuity<any>
+  | typeof BaseContinuityModal<any>;
 
 export class InteractionsFileManager {
   static getFilesFromDirectory(directory: string): string[] {
@@ -106,6 +109,61 @@ export class InteractionsFileManager {
     return this.getCommandsFromDirectory<BaseContinuity<any>>(
       FILE_PATH.SELECT_MENU_INTERACTIONS,
       BaseContinuity,
+    );
+  }
+
+  static async getStringSelectMenuInteractions(interactionsDir?: string) {
+    const FILE_PATH = getFilePaths(interactionsDir);
+
+    return this.getCommandsFromDirectory<BaseContinuity<any>>(
+      FILE_PATH.STRING_SELECT_MENU_INTERACTIONS,
+      BaseContinuity,
+    );
+  }
+
+  static async getUserSelectMenuInteractions(interactionsDir?: string) {
+    const FILE_PATH = getFilePaths(interactionsDir);
+
+    return this.getCommandsFromDirectory<BaseContinuity<any>>(
+      FILE_PATH.USER_SELECT_MENU_INTERACTIONS,
+      BaseContinuity,
+    );
+  }
+
+  static async getRoleSelectMenuInteractions(interactionsDir?: string) {
+    const FILE_PATH = getFilePaths(interactionsDir);
+
+    return this.getCommandsFromDirectory<BaseContinuity<any>>(
+      FILE_PATH.ROLE_SELECT_MENU_INTERACTIONS,
+      BaseContinuity,
+    );
+  }
+
+  static async getChannelSelectMenuInteractions(interactionsDir?: string) {
+    const FILE_PATH = getFilePaths(interactionsDir);
+
+    return this.getCommandsFromDirectory<BaseContinuity<any>>(
+      FILE_PATH.CHANNEL_SELECT_MENU_INTERACTIONS,
+      BaseContinuity,
+    );
+  }
+
+  static async getMentionableSelectMenuInteractions(interactionsDir?: string) {
+    const FILE_PATH = getFilePaths(interactionsDir);
+
+    return this.getCommandsFromDirectory<BaseContinuity<any>>(
+      FILE_PATH.MENTIONABLE_SELECT_MENU_INTERACTIONS,
+      BaseContinuity,
+    );
+  }
+
+  // modal interactions
+  static async getModalInteractions(interactionsDir?: string) {
+    const FILE_PATH = getFilePaths(interactionsDir);
+
+    return this.getCommandsFromDirectory<BaseContinuityModal<any>>(
+      FILE_PATH.MODAL_INTERACTIONS,
+      BaseContinuityModal,
     );
   }
 }
