@@ -1,5 +1,5 @@
-# local docs
-local.md
+# local data
+local
 
 # dependencies (bun install)
 node_modules
