@@ -37,11 +37,11 @@ export const loadFromRoot = (opts: LoadOptions = {}): LoadResult => {
   const envPath = findUp(fileName, startDir, maxDepth);
 
   if (envPath) {
-    dotenv.config({ path: envPath });
+    dotenv.config({ path: envPath, quiet: true });
     return { loaded: true, path: envPath };
   }
 
-  dotenv.config();
+  dotenv.config({ quiet: true });
   return { loaded: false, path: null };
 };
 
