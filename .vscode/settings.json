@@ -1,0 +1,8 @@
+{
+  "json.schemas": [
+    {
+      "fileMatch": ["packages/config/src/embeds/*.json"],
+      "url": "https://neverchangebrain.tech/schemas/discord-embed.json"
+    }
+  ]
+}
