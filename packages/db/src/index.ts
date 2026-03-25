@@ -11,3 +11,4 @@ const env = parseEnv(
 
 export const db = drizzle(env.DATABASE_URL, { schema });
 export * from './schema';
+export * from 'drizzle-orm';
