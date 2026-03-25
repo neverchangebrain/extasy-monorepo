@@ -1,7 +1,19 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "types": ["bun"]
+    "types": ["bun"],
+
+    "baseUrl": "./src",
+    "paths": {
+      "@commands/*": ["interactions/commands/*"],
+      "@select-menu/*": ["interactions/select-menu/*"],
+      "@buttons/*": ["interactions/buttons/*"],
+      "@modals/*": ["interactions/modals/*"],
+
+      "@utils/*": ["utils/*"],
+      "@services/*": ["services/*"],
+      "@constants/*": ["constants/*"]
+    }
   },
   "include": ["src"]
 }

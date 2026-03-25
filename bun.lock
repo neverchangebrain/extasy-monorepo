@@ -16,6 +16,7 @@
     "apps/assistant-bot": {
       "name": "@extasy/assistant-bot",
       "dependencies": {
+        "@extasy/config": "workspace:*",
         "@extasy/core": "workspace:*",
         "@extasy/db": "workspace:*",
         "@extasy/env": "workspace:*",
@@ -24,6 +25,13 @@
         "discord.js": "^14.25.1",
         "zod": "^4.3.6",
       },
+      "devDependencies": {
+        "@types/bun": "latest",
+        "typescript": "^5.9.2",
+      },
+    },
+    "packages/config": {
+      "name": "@extasy/config",
       "devDependencies": {
         "@types/bun": "latest",
         "typescript": "^5.9.2",
@@ -184,6 +192,8 @@
     "@esbuild/win32-x64": ["@esbuild/win32-x64@0.25.12", "", { "os": "win32", "cpu": "x64" }, "sha512-alJC0uCZpTFrSL0CCDjcgleBXPnCrEAhTBILpeAp7M/OFgoqtAetfBzX0xM00MUsVVPpVjlPuMbREqnZCXaTnA=="],
 
     "@extasy/assistant-bot": ["@extasy/assistant-bot@workspace:apps/assistant-bot"],
+
+    "@extasy/config": ["@extasy/config@workspace:packages/config"],
 
     "@extasy/core": ["@extasy/core@workspace:packages/core"],
 
