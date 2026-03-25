@@ -21,14 +21,14 @@ export const interactionCreate: EventHandler<Events.InteractionCreate> = async (
 
   const isCommand = interaction.isCommand();
   const isButton = interaction.isButton();
+  const isAutocomplete = interaction.isAutocomplete();
+  const isModalSubmit = interaction.isModalSubmit();
   const isSelectMenu =
     interaction.isStringSelectMenu() ||
     interaction.isUserSelectMenu() ||
     interaction.isRoleSelectMenu() ||
     interaction.isChannelSelectMenu() ||
     interaction.isMentionableSelectMenu();
-  const isAutocomplete = interaction.isAutocomplete();
-  const isModalSubmit = interaction.isModalSubmit();
 
   const supportedInteraction =
     isCommand || isButton || isSelectMenu || isAutocomplete || isModalSubmit;
