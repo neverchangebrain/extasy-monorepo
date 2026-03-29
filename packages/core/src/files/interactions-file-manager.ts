@@ -42,7 +42,6 @@ export class InteractionsFileManager {
   static async getCommandsFromDirectory<T extends CommandHandler>(
     directory: string,
     commandHandler: CommandHandlerClass,
-    { asInternal }: { asInternal?: boolean } = { asInternal: false },
   ): Promise<Collection<string, T>> {
     const commands = new Collection<string, T>();
 
@@ -50,13 +49,6 @@ export class InteractionsFileManager {
       const command = await import(file);
 
       if (!(command.default instanceof commandHandler)) continue;
-
-      if (
-        asInternal &&
-        !command.default.metadata.name.startsWith('internal-')
-      ) {
-        command.default.metadata.name = `internal-${command.default.metadata.name}`;
-      }
 
       commands.set(command.default.metadata.name, command.default as T);
     }
@@ -97,10 +89,7 @@ export class InteractionsFileManager {
   static async getButtonInteractions(interactionsDir?: string) {
     const FILE_PATH = getFilePaths(interactionsDir);
 
-    return this.getCommandsFromDirectory<BaseContinuity<any>>(
-      FILE_PATH.BUTTON_INTERACTIONS,
-      BaseContinuity,
-    );
+    return this.getCommandsFromDirectory<BaseContinuity<any>>(FILE_PATH.BUTTON_INTERACTIONS, BaseContinuity);
   }
 
   static async getStringSelectMenuInteractions(interactionsDir?: string) {
@@ -115,19 +104,13 @@ export class InteractionsFileManager {
   static async getUserSelectMenuInteractions(interactionsDir?: string) {
     const FILE_PATH = getFilePaths(interactionsDir);
 
-    return this.getCommandsFromDirectory<BaseContinuity<any>>(
-      FILE_PATH.USER_SELECT_MENU_INTERACTIONS,
-      BaseContinuity,
-    );
+    return this.getCommandsFromDirectory<BaseContinuity<any>>(FILE_PATH.USER_SELECT_MENU_INTERACTIONS, BaseContinuity);
   }
 
   static async getRoleSelectMenuInteractions(interactionsDir?: string) {
     const FILE_PATH = getFilePaths(interactionsDir);
 
-    return this.getCommandsFromDirectory<BaseContinuity<any>>(
-      FILE_PATH.ROLE_SELECT_MENU_INTERACTIONS,
-      BaseContinuity,
-    );
+    return this.getCommandsFromDirectory<BaseContinuity<any>>(FILE_PATH.ROLE_SELECT_MENU_INTERACTIONS, BaseContinuity);
   }
 
   static async getChannelSelectMenuInteractions(interactionsDir?: string) {
@@ -152,9 +135,6 @@ export class InteractionsFileManager {
   static async getModalInteractions(interactionsDir?: string) {
     const FILE_PATH = getFilePaths(interactionsDir);
 
-    return this.getCommandsFromDirectory<BaseContinuityModal<any>>(
-      FILE_PATH.MODAL_INTERACTIONS,
-      BaseContinuityModal,
-    );
+    return this.getCommandsFromDirectory<BaseContinuityModal<any>>(FILE_PATH.MODAL_INTERACTIONS, BaseContinuityModal);
   }
 }

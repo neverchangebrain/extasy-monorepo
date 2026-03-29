@@ -5,15 +5,13 @@ import { z } from 'zod';
 
 import type { CoreClient } from '../../client';
 
-export type ContinuityHandler<
-  T = any,
-  U extends MessageComponentInteraction = any,
-> = (ctx: { interaction: U; client: CoreClient; data: T }) => Promise<void>;
+export type ContinuityHandler<T = any, U extends MessageComponentInteraction = any> = (ctx: {
+  interaction: U;
+  client: CoreClient;
+  data: T;
+}) => Promise<void>;
 
-export abstract class BaseContinuity<
-  T,
-  U extends MessageComponentInteraction = MessageComponentInteraction,
-> {
+export abstract class BaseContinuity<T, U extends MessageComponentInteraction = MessageComponentInteraction> {
   static decodeCustomId(customId: string) {
     const [name, id] = customId.split(':');
 
@@ -45,9 +43,7 @@ export abstract class BaseContinuity<
     });
 
     if (!result) {
-      throw new Error(
-        `No data found for continuity in db (${this.metadata.name}:${id})`,
-      );
+      throw new Error(`No data found for continuity in db (${this.metadata.name}:${id})`);
     }
 
     try {
@@ -67,9 +63,7 @@ export abstract class BaseContinuity<
       .then((rows) => rows[0]);
 
     if (!result) {
-      throw new Error(
-        `Failed to create continuity context (${this.metadata.name})`,
-      );
+      throw new Error(`Failed to create continuity context (${this.metadata.name})`);
     }
 
     const buttonId = this.encodeButtonId(result.id);

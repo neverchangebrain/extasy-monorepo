@@ -9,6 +9,7 @@
     "start": "bun src/index.ts"
   },
   "dependencies": {
+    "@extasy/config": "workspace:*",
     "@extasy/core": "workspace:*",
     "@extasy/db": "workspace:*",
     "@extasy/env": "workspace:*",

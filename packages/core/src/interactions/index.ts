@@ -1,4 +1,5 @@
 import {
+  AutocompleteInteraction,
   ButtonBuilder,
   type ButtonComponentData,
   ButtonInteraction,
@@ -13,20 +14,15 @@ import type { CoreClient } from '../client';
 export class ChatInputCommandHandler {
   constructor(
     readonly metadata: SharedSlashCommand,
-    readonly handler: (
-      interaction: ChatInputCommandInteraction,
-      client: CoreClient,
-    ) => Promise<unknown>,
+    readonly handler: (interaction: ChatInputCommandInteraction, client: CoreClient) => Promise<unknown>,
+    readonly autocomplete?: (interaction: AutocompleteInteraction, client: CoreClient) => Promise<unknown>,
   ) {}
 }
 
 export class ContextMenuMessageCommandHandler {
   constructor(
     readonly metadata: ContextMenuCommandBuilder,
-    readonly handler: (
-      interaction: MessageContextMenuCommandInteraction,
-      client: CoreClient,
-    ) => Promise<unknown>,
+    readonly handler: (interaction: MessageContextMenuCommandInteraction, client: CoreClient) => Promise<unknown>,
   ) {}
 }
 
@@ -36,9 +32,6 @@ export class GenericButtonInteractionHandler {
       name: string;
       getButton: (data?: Partial<ButtonComponentData>) => ButtonBuilder;
     },
-    readonly handler: (
-      interaction: ButtonInteraction,
-      client: CoreClient,
-    ) => Promise<unknown>,
+    readonly handler: (interaction: ButtonInteraction, client: CoreClient) => Promise<unknown>,
   ) {}
 }
