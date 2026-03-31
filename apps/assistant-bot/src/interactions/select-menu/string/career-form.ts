@@ -36,8 +36,6 @@ class CareerFormSelectMenuInteraction extends BaseContinuity<CareerFormDataType,
 }
 
 const careerFormSelectMenuInteraction = new CareerFormSelectMenuInteraction(async ({ interaction, data }) => {
-  console.log('Selected career form:', data);
-
   const selectedValue = interaction.values[0];
   if (!selectedValue) return;
 

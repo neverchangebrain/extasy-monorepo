@@ -36,7 +36,7 @@ const careerSendSubcommand = async (interaction: ChatInputCommandInteraction<'ca
 
   const actionRow = new ActionRowBuilder<StringSelectMenuBuilder>().setComponents(
     new StringSelectMenuBuilder()
-      .setCustomId(context.customId)
+      .setCustomId(context.id)
       .setPlaceholder('🔎 Выберите желаемую вакансию')
       .setMaxValues(1)
       .setOptions(
