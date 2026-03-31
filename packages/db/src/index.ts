@@ -1,7 +1,7 @@
-import { parseEnv, z } from '@extasy/env';
-import { drizzle } from 'drizzle-orm/node-postgres';
+import { parseEnv, z } from "@extasy/env";
+import { drizzle } from "drizzle-orm/node-postgres";
 
-import * as schema from './schema';
+import * as schema from "./schema";
 
 const env = parseEnv(
   z.object({
@@ -10,5 +10,5 @@ const env = parseEnv(
 );
 
 export const db = drizzle(env.DATABASE_URL, { schema });
-export * from './schema';
-export * from 'drizzle-orm';
+export * from "./schema";
+export * from "drizzle-orm";
