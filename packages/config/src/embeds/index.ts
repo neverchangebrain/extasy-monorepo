@@ -1,1 +1,1 @@
-export { default as AssistantCareerEmbed } from './assistant-career.json';
+export { default as AssistantCareerEmbed } from "./assistant-career.json";
