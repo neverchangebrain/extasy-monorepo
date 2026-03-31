@@ -43,6 +43,26 @@ export const careerManageActionCreate = async (
               .setPlaceholder('Следят за порядком в голосовых каналах, помогают участникам с вопросами по серверу')
               .setRequired(true),
           ),
+      (labelBuilder) =>
+        labelBuilder
+          .setLabel('Вопрос по вакансии #1')
+          .setTextInputComponent((textInputBuilder) =>
+            textInputBuilder
+              .setCustomId('question1')
+              .setStyle(TextInputStyle.Paragraph)
+              .setPlaceholder('Вы хотите модерировать голосовые или текстовые каналы?')
+              .setRequired(true),
+          ),
+      (labelBuilder) =>
+        labelBuilder
+          .setLabel('Вопрос по вакансии #2')
+          .setTextInputComponent((textInputBuilder) =>
+            textInputBuilder
+              .setCustomId('question2')
+              .setStyle(TextInputStyle.Paragraph)
+              .setPlaceholder("Ознакомлены ли вы с правилами сервера и TOS'ом?")
+              .setRequired(true),
+          ),
     );
 
   await interaction.showModal(modal);

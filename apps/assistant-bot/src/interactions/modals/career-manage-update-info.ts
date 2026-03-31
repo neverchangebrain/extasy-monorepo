@@ -1,7 +1,7 @@
 import { MessageFlags, ModalSubmitInteraction, bold, quote } from 'discord.js';
 
 import { SendCareerCommandAccessIds } from '@extasy/config';
-import { BaseContinuityModal, type ModalContinuityHandler } from '@extasy/core';
+import { BaseContinuity, type ContinuityHandler } from '@extasy/core';
 import { careers, db, eq } from '@extasy/db';
 import z from 'zod';
 
@@ -12,13 +12,18 @@ const CareerManageUpdateInfoSchema = z.object({
     name: z.string(),
     description: z.string(),
     roleId: z.string(),
+    question1: z.string(),
+    question2: z.string(),
   }),
 });
 
 type CareerManageUpdateInfoDataType = z.infer<typeof CareerManageUpdateInfoSchema>;
 
-class CareerManageUpdateInfoModalInteraction extends BaseContinuityModal<CareerManageUpdateInfoDataType> {
-  constructor(handler: ModalContinuityHandler<CareerManageUpdateInfoDataType>) {
+class CareerManageUpdateInfoModalInteraction extends BaseContinuity<
+  CareerManageUpdateInfoDataType,
+  ModalSubmitInteraction
+> {
+  constructor(handler: ContinuityHandler<CareerManageUpdateInfoDataType, ModalSubmitInteraction>) {
     super(CareerManageUpdateInfoSchema, { name: 'career_manage_update_info_modal' });
 
     this.handler = handler;
@@ -38,8 +43,10 @@ const careerManageUpdateInfoModalInteraction = new CareerManageUpdateInfoModalIn
     const name = interaction.fields.getTextInputValue('name').trim();
     const description = interaction.fields.getTextInputValue('description').trim();
     const role = interaction.fields.getSelectedRoles('role')!.at(0);
+    const question1 = interaction.fields.getTextInputValue('question1').trim();
+    const question2 = interaction.fields.getTextInputValue('question2').trim();
 
-    if (!name || !description || !role) {
+    if (!name || !description || !role || !question1 || !question2) {
       await interaction.reply({
         content: quote(`${interaction.user.toString()}, при создании вакансии все поля должны быть заполнены.`),
         flags: [MessageFlags.Ephemeral],
@@ -53,6 +60,8 @@ const careerManageUpdateInfoModalInteraction = new CareerManageUpdateInfoModalIn
         ...(name !== data.oldContent.name ? { name } : {}),
         ...(description !== data.oldContent.description ? { description } : {}),
         ...(role.id !== data.oldContent.roleId ? { roleId: role.id } : {}),
+        ...(question1 !== data.oldContent.question1 ? { question1 } : {}),
+        ...(question2 !== data.oldContent.question2 ? { question2 } : {}),
       })
       .where(eq(careers.id, data.oldContent.id))
       .returning();

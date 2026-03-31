@@ -10,7 +10,7 @@ import {
 
 import { AssistantCareerEmbed, SendCareerCommandAccessIds } from '@extasy/config';
 import { careers, db, eq } from '@extasy/db';
-import vacanciesSelectMenuInteraction from '@select-menu/vacancies';
+import careerFormSelectMenuInteraction from '@select-menu/career-form';
 
 const careerSendSubcommand = async (interaction: ChatInputCommandInteraction<'cached'>): Promise<unknown> => {
   await interaction.deferReply({ flags: [MessageFlags.Ephemeral] });
@@ -26,7 +26,7 @@ const careerSendSubcommand = async (interaction: ChatInputCommandInteraction<'ca
 
   const actualCareers = await db.select().from(careers).where(eq(careers.available, true));
 
-  const context = await vacanciesSelectMenuInteraction.create({
+  const context = await careerFormSelectMenuInteraction.create({
     content: actualCareers.map((career) => ({
       label: career.name,
       description: career.description,
@@ -36,8 +36,9 @@ const careerSendSubcommand = async (interaction: ChatInputCommandInteraction<'ca
 
   const actionRow = new ActionRowBuilder<StringSelectMenuBuilder>().setComponents(
     new StringSelectMenuBuilder()
-      .setCustomId(context.id)
+      .setCustomId(context.customId)
       .setPlaceholder('🔎 Выберите желаемую вакансию')
+      .setMaxValues(1)
       .setOptions(
         actualCareers.map((career) => ({
           label: career.name,

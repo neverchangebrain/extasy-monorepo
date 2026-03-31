@@ -1,20 +1,7 @@
-import {
-  ActionRowBuilder,
-  EmbedBuilder,
-  MessageFlags,
-  ModalBuilder,
-  PermissionsBitField,
-  SlashCommandBuilder,
-  StringSelectMenuBuilder,
-  TextInputStyle,
-  bold,
-  quote,
-} from 'discord.js';
+import { PermissionsBitField, SlashCommandBuilder } from 'discord.js';
 
-import { AssistantCareerEmbed, ManageCareerCommandAccessIds, SendCareerCommandAccessIds } from '@extasy/config';
 import { ChatInputCommandHandler } from '@extasy/core';
-import { careers, db, eq } from '@extasy/db';
-import createCareerModal from '@modals/career-create';
+import { careers, db } from '@extasy/db';
 import careerManageSubcommand from '@subcommands/career/manage';
 import careerSendSubcommand from '@subcommands/career/send';
 

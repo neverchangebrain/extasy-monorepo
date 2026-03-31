@@ -5,7 +5,6 @@ import { logger } from '@extasy/logger';
 import { ChatInputCommandHandler, ContextMenuMessageCommandHandler } from '.';
 import type { CoreClient } from '../client';
 import { BaseContinuity } from './continuity/base';
-import { BaseContinuityModal } from './continuity/modal';
 
 export const interactionHandler = async (interaction: Interaction, client: CoreClient) => {
   if (interaction.isChatInputCommand()) {
@@ -69,7 +68,7 @@ export const interactionHandler = async (interaction: Interaction, client: CoreC
   }
 
   if (interaction.isModalSubmit()) {
-    const continuityInteraction = BaseContinuityModal.decodeCustomId(interaction.customId);
+    const continuityInteraction = BaseContinuity.decodeCustomId(interaction.customId);
 
     const modalInteraction = client.modalInteractions.get(continuityInteraction.name);
 
@@ -133,7 +132,7 @@ export const interactionHandler = async (interaction: Interaction, client: CoreC
 
     // button interactions
 
-    const continuityInteraction = BaseContinuity.decodeButtonId(interaction.customId);
+    const continuityInteraction = BaseContinuity.decodeCustomId(interaction.customId);
 
     const buttonInteraction = client.buttonInteractions.get(continuityInteraction.name);
 

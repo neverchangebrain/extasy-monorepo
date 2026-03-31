@@ -1,17 +1,20 @@
-import { MessageComponentInteraction } from 'discord.js';
+import { MessageComponentInteraction, ModalSubmitInteraction } from 'discord.js';
 
 import { continuity, db } from '@extasy/db';
 import { z } from 'zod';
 
 import type { CoreClient } from '../../client';
 
-export type ContinuityHandler<T = any, U extends MessageComponentInteraction = any> = (ctx: {
+export type ContinuityHandler<T = any, U extends MessageComponentInteraction | ModalSubmitInteraction = any> = (ctx: {
   interaction: U;
   client: CoreClient;
   data: T;
 }) => Promise<void>;
 
-export abstract class BaseContinuity<T, U extends MessageComponentInteraction = MessageComponentInteraction> {
+export abstract class BaseContinuity<
+  T,
+  U extends MessageComponentInteraction | ModalSubmitInteraction = MessageComponentInteraction | ModalSubmitInteraction,
+> {
   static decodeCustomId(customId: string) {
     const [name, id] = customId.split(':');
 
@@ -26,8 +29,12 @@ export abstract class BaseContinuity<T, U extends MessageComponentInteraction = 
     return this.decodeCustomId(buttonId);
   }
 
-  public encodeButtonId(id: string) {
+  public encodeCustomId(id: string) {
     return `${this.metadata.name}:${id}`;
+  }
+
+  public encodeButtonId(id: string) {
+    return this.encodeCustomId(id);
   }
 
   public handler: ContinuityHandler<T, U> | undefined = undefined;
@@ -66,12 +73,13 @@ export abstract class BaseContinuity<T, U extends MessageComponentInteraction = 
       throw new Error(`Failed to create continuity context (${this.metadata.name})`);
     }
 
-    const buttonId = this.encodeButtonId(result.id);
+    const customId = this.encodeCustomId(result.id);
 
     return {
       id: result.id,
       name: result.name,
-      buttonId,
+      customId,
+      buttonId: customId,
     };
   }
 }

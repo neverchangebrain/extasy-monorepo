@@ -35,6 +35,8 @@ export const careerManageActionUpdateInfo = async (
       name: career.name,
       description: career.description,
       roleId: career.roleId,
+      question1: career.question1,
+      question2: career.question2,
     },
   });
 
@@ -73,6 +75,28 @@ export const careerManageActionUpdateInfo = async (
               .setStyle(TextInputStyle.Paragraph)
               .setValue(career.description)
               .setPlaceholder('Следят за порядком в голосовых каналах, помогают участникам с вопросами по серверу')
+              .setRequired(true),
+          ),
+      (labelBuilder) =>
+        labelBuilder
+          .setLabel('Вопрос по вакансии #1')
+          .setTextInputComponent((textInputBuilder) =>
+            textInputBuilder
+              .setCustomId('question1')
+              .setStyle(TextInputStyle.Paragraph)
+              .setValue(career.question1)
+              .setPlaceholder('Вы хотите модерировать голосовые или текстовые каналы?')
+              .setRequired(true),
+          ),
+      (labelBuilder) =>
+        labelBuilder
+          .setLabel('Вопрос по вакансии #2')
+          .setTextInputComponent((textInputBuilder) =>
+            textInputBuilder
+              .setCustomId('question2')
+              .setStyle(TextInputStyle.Paragraph)
+              .setValue(career.question2)
+              .setPlaceholder("Ознакомлены ли вы с правилами сервера и TOS'ом?")
               .setRequired(true),
           ),
     );

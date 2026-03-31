@@ -1,6 +1,5 @@
 import { Collection } from 'discord.js';
 
-import { logger } from '@extasy/logger';
 import * as fs from 'fs';
 import path from 'path';
 
@@ -11,21 +10,20 @@ import {
   GenericButtonInteractionHandler,
 } from '../interactions';
 import { BaseContinuity } from '../interactions/continuity/base';
-import { BaseContinuityModal } from '../interactions/continuity/modal';
 
 type CommandHandler =
   | ChatInputCommandHandler
   | ContextMenuMessageCommandHandler
   | GenericButtonInteractionHandler
   | BaseContinuity<any>
-  | BaseContinuityModal<any>;
+  | BaseContinuity<any>;
 
 type CommandHandlerClass =
   | typeof ChatInputCommandHandler
   | typeof ContextMenuMessageCommandHandler
   | typeof GenericButtonInteractionHandler
   | typeof BaseContinuity<any>
-  | typeof BaseContinuityModal<any>;
+  | typeof BaseContinuity<any>;
 
 export class InteractionsFileManager {
   static getFilesFromDirectory(directory: string): string[] {
@@ -135,6 +133,6 @@ export class InteractionsFileManager {
   static async getModalInteractions(interactionsDir?: string) {
     const FILE_PATH = getFilePaths(interactionsDir);
 
-    return this.getCommandsFromDirectory<BaseContinuityModal<any>>(FILE_PATH.MODAL_INTERACTIONS, BaseContinuityModal);
+    return this.getCommandsFromDirectory<BaseContinuity<any>>(FILE_PATH.MODAL_INTERACTIONS, BaseContinuity);
   }
 }

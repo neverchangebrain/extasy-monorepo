@@ -4,7 +4,6 @@ export * from './interactions';
 export * from './interactions/import-interactions';
 export * from './interactions/interaction-handler';
 export * from './interactions/continuity/base';
-export * from './interactions/continuity/modal';
 
 export * from './event';
 
