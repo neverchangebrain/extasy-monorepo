@@ -25,16 +25,8 @@ export abstract class BaseContinuity<
     return { name, id };
   }
 
-  static decodeButtonId(buttonId: string) {
-    return this.decodeCustomId(buttonId);
-  }
-
   public encodeCustomId(id: string) {
     return `${this.metadata.name}:${id}`;
-  }
-
-  public encodeButtonId(id: string) {
-    return this.encodeCustomId(id);
   }
 
   public handler: ContinuityHandler<T, U> | undefined = undefined;
@@ -79,7 +71,6 @@ export abstract class BaseContinuity<
       id: result.id,
       name: result.name,
       customId,
-      buttonId: customId,
     };
   }
 }
