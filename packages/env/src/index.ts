@@ -1,8 +1,8 @@
-import fs from 'node:fs';
-import path from 'node:path';
+import fs from "node:fs";
+import path from "node:path";
 
-import dotenv from 'dotenv';
-import { z } from 'zod';
+import dotenv from "dotenv";
+import { z } from "zod";
 
 type LoadResult =
   | { loaded: true; path: string }
@@ -30,7 +30,7 @@ const findUp = (fileName: string, startDir = process.cwd(), maxDepth = 10) => {
 };
 
 export const loadFromRoot = (opts: LoadOptions = {}): LoadResult => {
-  const fileName = opts.fileName ?? '.env';
+  const fileName = opts.fileName ?? ".env";
   const startDir = opts.startDir ?? process.cwd();
   const maxDepth = opts.maxDepth ?? 10;
 
