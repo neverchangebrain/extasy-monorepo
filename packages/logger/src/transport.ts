@@ -1,4 +1,4 @@
-import pp from 'pino-pretty';
+import pp from "pino-pretty";
 
 interface PrettyOptions {
   colorize?: boolean;
@@ -11,7 +11,9 @@ interface PrettyOptions {
     (
       inputData: string | object,
       keyName: string,
+      // biome-ignore lint/suspicious/noExplicitAny: <explanation>
       logObj: Record<string, any>,
+      // biome-ignore lint/suspicious/noExplicitAny: <explanation>
       extras?: any,
     ) => string
   >;
@@ -22,20 +24,22 @@ const loggerTransport = async (options: PrettyOptions) =>
     ...options,
     customPrettifiers: {
       time: (inputData: string | object): string => {
-        if (typeof inputData !== 'string') return '';
+        if (typeof inputData !== "string") return "";
 
-        return inputData.replace(/^\[|\]$/g, '');
+        return inputData.replace(/^\[|\]$/g, "");
       },
       level: (
         inputData: string | object,
         _keyName: string,
+        // biome-ignore lint/suspicious/noExplicitAny: <explanation>
         _logObj: Record<string, any>,
+        // biome-ignore lint/suspicious/noExplicitAny: <explanation>
         extras?: any,
       ): string => {
-        if (typeof inputData === 'object') return '';
+        if (typeof inputData === "object") return "";
 
         const labelColorized = extras?.labelColorized;
-        if (!labelColorized) return '';
+        if (!labelColorized) return "";
 
         return ` [${labelColorized.toLowerCase()}]`;
       },
