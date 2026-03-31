@@ -11,6 +11,7 @@
     "db:push": "bun --filter @extasy/db push",
     "db:studio": "bun --filter @extasy/db studio",
     "dev:assistant": "bun --watch apps/assistant-bot/src/index.ts",
+    "dev:staff": "bun --watch apps/staff-bot/src/index.ts",
     "format": "bunx @biomejs/biome format --write .",
     "check": "bunx @biomejs/biome check .",
     "check:fix": "bunx @biomejs/biome check --write .",

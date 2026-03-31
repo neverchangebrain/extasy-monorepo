@@ -36,7 +36,6 @@ const client = new Client({
   makeCache: Options.cacheWithLimits({}),
 }) as CoreClient;
 
-// Initialize collections before async imports to avoid race conditions on startup.
 client.chatInputCommands = new Collection();
 client.contextMenuMessageCommands = new Collection();
 client.genericButtonInteractions = new Collection();
@@ -53,12 +52,12 @@ await importInteractions(client, {
 });
 
 deployCommands(
-  env.ASSISTANT_BOT_TOKEN,
-  env.ASSISTANT_BOT_ID,
+  env.STAFF_BOT_TOKEN,
+  env.STAFF_BOT_ID,
   path.join(import.meta.dir, "./interactions"),
 );
 
 clientEvents.forEach((callback, event) => client.on(event, callback));
-client.login(env.ASSISTANT_BOT_TOKEN);
+client.login(env.STAFF_BOT_TOKEN);
 
 export { client as internalClient };

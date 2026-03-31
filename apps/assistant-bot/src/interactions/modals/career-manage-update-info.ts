@@ -5,7 +5,6 @@ import {
   quote,
 } from "discord.js";
 
-import { SendCareerCommandAccessIds } from "@extasy/config";
 import { BaseContinuity, type ContinuityHandler } from "@extasy/core";
 import { careers, db, eq } from "@extasy/db";
 import z from "zod";
@@ -46,10 +45,7 @@ class CareerManageUpdateInfoModalInteraction extends BaseContinuity<
 
 const careerManageUpdateInfoModalInteraction =
   new CareerManageUpdateInfoModalInteraction(async ({ interaction, data }) => {
-    if (
-      !SendCareerCommandAccessIds.includes(interaction.user.id) ||
-      interaction.user.id !== data.userId
-    ) {
+    if (interaction.user.id !== data.userId) {
       await interaction.reply({
         content: quote(
           `${interaction.user.toString()}, у тебя ${bold("нет доступа")} к этой команде.`,

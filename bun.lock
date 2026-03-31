@@ -27,6 +27,21 @@
         "typescript": "^5.9.2",
       },
     },
+    "apps/staff-bot": {
+      "name": "@extasy/staff-bot",
+      "dependencies": {
+        "@extasy/core": "workspace:*",
+        "@extasy/db": "workspace:*",
+        "@extasy/env": "workspace:*",
+        "@extasy/logger": "workspace:*",
+        "discord.js": "^14.25.1",
+        "zod": "^4.3.6",
+      },
+      "devDependencies": {
+        "@types/bun": "latest",
+        "typescript": "^5.9.2",
+      },
+    },
     "packages/config": {
       "name": "@extasy/config",
       "devDependencies": {
@@ -201,6 +216,8 @@
     "@extasy/logger": ["@extasy/logger@workspace:packages/logger"],
 
     "@extasy/redis": ["@extasy/redis@workspace:packages/redis"],
+
+    "@extasy/staff-bot": ["@extasy/staff-bot@workspace:apps/staff-bot"],
 
     "@ioredis/commands": ["@ioredis/commands@1.5.1", "", {}, "sha512-JH8ZL/ywcJyR9MmJ5BNqZllXNZQqQbnVZOqpPQqE1vHiFgAw4NHbvE0FOduNU8IX9babitBT46571OnPTT0Zcw=="],
 

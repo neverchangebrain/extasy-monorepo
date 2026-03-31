@@ -58,8 +58,6 @@ const careerFormSelectMenuInteraction = new CareerFormSelectMenuInteraction(
     }
 
     const context = await careerFormModalInteraction.create({
-      name: career.name,
-      description: career.description,
       roleId: career.roleId,
       question1: career.question1,
       question2: career.question2,
