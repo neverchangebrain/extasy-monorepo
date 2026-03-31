@@ -1,5 +1,5 @@
-import { z } from '@extasy/env';
-import { parseEnv } from '@extasy/env';
+import { z } from "@extasy/env";
+import { parseEnv } from "@extasy/env";
 
 export const env = parseEnv(
   z.object({

@@ -11,18 +11,16 @@ import {
 } from '../interactions';
 import { BaseContinuity } from '../interactions/continuity/base';
 
-type CommandHandler =
+type InteractionHandler =
   | ChatInputCommandHandler
   | ContextMenuMessageCommandHandler
   | GenericButtonInteractionHandler
-  | BaseContinuity<any>
   | BaseContinuity<any>;
 
-type CommandHandlerClass =
+type InteractionHandlerClass =
   | typeof ChatInputCommandHandler
   | typeof ContextMenuMessageCommandHandler
   | typeof GenericButtonInteractionHandler
-  | typeof BaseContinuity<any>
   | typeof BaseContinuity<any>;
 
 export class InteractionsFileManager {
@@ -37,28 +35,28 @@ export class InteractionsFileManager {
       .map((file) => path.join(directory, file));
   }
 
-  static async getCommandsFromDirectory<T extends CommandHandler>(
+  static async getInteractionsFromDirectory<T extends InteractionHandler>(
     directory: string,
-    commandHandler: CommandHandlerClass,
+    interactionHandler: InteractionHandlerClass,
   ): Promise<Collection<string, T>> {
-    const commands = new Collection<string, T>();
+    const interactions = new Collection<string, T>();
 
     for (const file of this.getFilesFromDirectory(directory)) {
-      const command = await import(file);
+      const interaction = await import(file);
 
-      if (!(command.default instanceof commandHandler)) continue;
+      if (!(interaction.default instanceof interactionHandler)) continue;
 
-      commands.set(command.default.metadata.name, command.default as T);
+      interactions.set(interaction.default.metadata.name, interaction.default as T);
     }
 
-    return commands;
+    return interactions;
   }
 
   // chat input commands
   static async getChatInputCommands(interactionsDir?: string) {
     const FILE_PATH = getFilePaths(interactionsDir);
 
-    return this.getCommandsFromDirectory<ChatInputCommandHandler>(
+    return this.getInteractionsFromDirectory<ChatInputCommandHandler>(
       FILE_PATH.CHAT_INPUT_COMMANDS,
       ChatInputCommandHandler,
     );
@@ -68,7 +66,7 @@ export class InteractionsFileManager {
   static async getContextMenuMessageCommands(interactionsDir?: string) {
     const FILE_PATH = getFilePaths(interactionsDir);
 
-    return this.getCommandsFromDirectory<ContextMenuMessageCommandHandler>(
+    return this.getInteractionsFromDirectory<ContextMenuMessageCommandHandler>(
       FILE_PATH.CONTEXT_MENU_MESSAGE_COMMANDS,
       ContextMenuMessageCommandHandler,
     );
@@ -78,7 +76,7 @@ export class InteractionsFileManager {
   static async getGenericButtonInteractions(interactionsDir?: string) {
     const FILE_PATH = getFilePaths(interactionsDir);
 
-    return this.getCommandsFromDirectory<GenericButtonInteractionHandler>(
+    return this.getInteractionsFromDirectory<GenericButtonInteractionHandler>(
       FILE_PATH.GENERIC_BUTTON_INTERACTIONS,
       GenericButtonInteractionHandler,
     );
@@ -87,13 +85,13 @@ export class InteractionsFileManager {
   static async getButtonInteractions(interactionsDir?: string) {
     const FILE_PATH = getFilePaths(interactionsDir);
 
-    return this.getCommandsFromDirectory<BaseContinuity<any>>(FILE_PATH.BUTTON_INTERACTIONS, BaseContinuity);
+    return this.getInteractionsFromDirectory<BaseContinuity<any>>(FILE_PATH.BUTTON_INTERACTIONS, BaseContinuity);
   }
 
   static async getStringSelectMenuInteractions(interactionsDir?: string) {
     const FILE_PATH = getFilePaths(interactionsDir);
 
-    return this.getCommandsFromDirectory<BaseContinuity<any>>(
+    return this.getInteractionsFromDirectory<BaseContinuity<any>>(
       FILE_PATH.STRING_SELECT_MENU_INTERACTIONS,
       BaseContinuity,
     );
@@ -102,19 +100,25 @@ export class InteractionsFileManager {
   static async getUserSelectMenuInteractions(interactionsDir?: string) {
     const FILE_PATH = getFilePaths(interactionsDir);
 
-    return this.getCommandsFromDirectory<BaseContinuity<any>>(FILE_PATH.USER_SELECT_MENU_INTERACTIONS, BaseContinuity);
+    return this.getInteractionsFromDirectory<BaseContinuity<any>>(
+      FILE_PATH.USER_SELECT_MENU_INTERACTIONS,
+      BaseContinuity,
+    );
   }
 
   static async getRoleSelectMenuInteractions(interactionsDir?: string) {
     const FILE_PATH = getFilePaths(interactionsDir);
 
-    return this.getCommandsFromDirectory<BaseContinuity<any>>(FILE_PATH.ROLE_SELECT_MENU_INTERACTIONS, BaseContinuity);
+    return this.getInteractionsFromDirectory<BaseContinuity<any>>(
+      FILE_PATH.ROLE_SELECT_MENU_INTERACTIONS,
+      BaseContinuity,
+    );
   }
 
   static async getChannelSelectMenuInteractions(interactionsDir?: string) {
     const FILE_PATH = getFilePaths(interactionsDir);
 
-    return this.getCommandsFromDirectory<BaseContinuity<any>>(
+    return this.getInteractionsFromDirectory<BaseContinuity<any>>(
       FILE_PATH.CHANNEL_SELECT_MENU_INTERACTIONS,
       BaseContinuity,
     );
@@ -123,7 +127,7 @@ export class InteractionsFileManager {
   static async getMentionableSelectMenuInteractions(interactionsDir?: string) {
     const FILE_PATH = getFilePaths(interactionsDir);
 
-    return this.getCommandsFromDirectory<BaseContinuity<any>>(
+    return this.getInteractionsFromDirectory<BaseContinuity<any>>(
       FILE_PATH.MENTIONABLE_SELECT_MENU_INTERACTIONS,
       BaseContinuity,
     );
@@ -133,6 +137,6 @@ export class InteractionsFileManager {
   static async getModalInteractions(interactionsDir?: string) {
     const FILE_PATH = getFilePaths(interactionsDir);
 
-    return this.getCommandsFromDirectory<BaseContinuity<any>>(FILE_PATH.MODAL_INTERACTIONS, BaseContinuity);
+    return this.getInteractionsFromDirectory<BaseContinuity<any>>(FILE_PATH.MODAL_INTERACTIONS, BaseContinuity);
   }
 }

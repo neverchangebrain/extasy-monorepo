@@ -1,33 +1,41 @@
-import { PermissionsBitField, SlashCommandBuilder } from 'discord.js';
+import { PermissionsBitField, SlashCommandBuilder } from "discord.js";
 
-import { ChatInputCommandHandler } from '@extasy/core';
-import { careers, db } from '@extasy/db';
-import careerManageSubcommand from '@subcommands/career/manage';
-import careerSendSubcommand from '@subcommands/career/send';
+import { ChatInputCommandHandler } from "@extasy/core";
+import { careers, db } from "@extasy/db";
+import careerManageSubcommand from "@subcommands/career/manage";
+import careerSendSubcommand from "@subcommands/career/send";
 
 const data = new SlashCommandBuilder()
-  .setName('career')
-  .setDescription('Модуль вакансий')
+  .setName("career")
+  .setDescription("Модуль вакансий")
   .setDefaultMemberPermissions(PermissionsBitField.Flags.Administrator)
-  .addSubcommand((subcommand) => subcommand.setName('send').setDescription('Отправить набор с актуальными вакансиями'))
   .addSubcommand((subcommand) =>
     subcommand
-      .setName('manage')
-      .setDescription('Управление вакансиями')
+      .setName("send")
+      .setDescription("Отправить набор с актуальными вакансиями"),
+  )
+  .addSubcommand((subcommand) =>
+    subcommand
+      .setName("manage")
+      .setDescription("Управление вакансиями")
       .addStringOption((option) =>
         option
-          .setName('action')
-          .setDescription('Создание или изменение вакансии')
+          .setName("action")
+          .setDescription("Создание или изменение вакансии")
           .setRequired(true)
           .addChoices(
-            { name: 'Создать', value: 'create' },
-            { name: 'Обновить информацию', value: 'update-info' },
-            { name: 'Обновить актуальность', value: 'update-available' },
-            { name: 'Удалить', value: 'delete' },
+            { name: "Создать", value: "create" },
+            { name: "Обновить информацию", value: "update-info" },
+            { name: "Обновить актуальность", value: "update-available" },
+            { name: "Удалить", value: "delete" },
           ),
       )
       .addStringOption((option) =>
-        option.setName('career').setDescription('Вакансия для управления').setAutocomplete(true).setRequired(false),
+        option
+          .setName("career")
+          .setDescription("Вакансия для управления")
+          .setAutocomplete(true)
+          .setRequired(false),
       ),
   );
 
@@ -36,13 +44,13 @@ export default new ChatInputCommandHandler(
   async (interaction) => {
     if (!interaction.inCachedGuild()) return;
 
-    const subcommand = interaction.options.getSubcommand() as 'send' | 'manage';
+    const subcommand = interaction.options.getSubcommand() as "send" | "manage";
 
     switch (subcommand) {
-      case 'send':
+      case "send":
         await careerSendSubcommand(interaction);
         break;
-      case 'manage':
+      case "manage":
         await careerManageSubcommand(interaction);
         break;
 
@@ -53,14 +61,14 @@ export default new ChatInputCommandHandler(
   async (interaction) => {
     const subcommand = interaction.options.getSubcommand(false);
 
-    if (subcommand !== 'manage') {
+    if (subcommand !== "manage") {
       await interaction.respond([]);
       return;
     }
 
     const focusedOption = interaction.options.getFocused(true);
 
-    if (focusedOption.name !== 'career') {
+    if (focusedOption.name !== "career") {
       await interaction.respond([]);
       return;
     }
@@ -73,7 +81,7 @@ export default new ChatInputCommandHandler(
       .filter((career) => career.name.toLowerCase().includes(focusedValue))
       .slice(0, 25)
       .map((career) => ({
-        name: `${career.name} (${career.available ? 'Активная' : 'Неактивная'})`,
+        name: `${career.name} (${career.available ? "Активная" : "Неактивная"})`,
         value: career.id,
       }));
 

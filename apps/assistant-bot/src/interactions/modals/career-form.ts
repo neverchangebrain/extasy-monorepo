@@ -1,7 +1,7 @@
-import { ModalSubmitInteraction } from 'discord.js';
+import type { ModalSubmitInteraction } from "discord.js";
 
-import { BaseContinuity, type ContinuityHandler } from '@extasy/core';
-import z from 'zod';
+import { BaseContinuity, type ContinuityHandler } from "@extasy/core";
+import z from "zod";
 
 const CareerForm = z.object({
   name: z.string(),
@@ -13,16 +13,23 @@ const CareerForm = z.object({
 
 export type CareerFormType = z.infer<typeof CareerForm>;
 
-class CareerFormModalInteraction extends BaseContinuity<CareerFormType, ModalSubmitInteraction> {
-  constructor(handler: ContinuityHandler<CareerFormType, ModalSubmitInteraction>) {
-    super(CareerForm, { name: 'career_form_modal' });
+class CareerFormModalInteraction extends BaseContinuity<
+  CareerFormType,
+  ModalSubmitInteraction
+> {
+  constructor(
+    handler: ContinuityHandler<CareerFormType, ModalSubmitInteraction>,
+  ) {
+    super(CareerForm, { name: "career_form_modal" });
 
     this.handler = handler;
   }
 }
 
-const careerFormModalInteraction = new CareerFormModalInteraction(async ({ interaction, data }) => {
-  // Здесь будет обработка данных из формы, например, сохранение в базу данных
-});
+const careerFormModalInteraction = new CareerFormModalInteraction(
+  async ({ interaction, data }) => {
+    // Здесь будет обработка данных из формы, например, сохранение в базу данных
+  },
+);
 
 export default careerFormModalInteraction;

@@ -1,9 +1,9 @@
-import { Events, MessageFlags } from 'discord.js';
+import { type Events, MessageFlags } from "discord.js";
 
-import { type EventHandler, interactionHandler } from '@extasy/core';
-import { logger } from '@extasy/logger';
+import { type EventHandler, interactionHandler } from "@extasy/core";
+import { logger } from "@extasy/logger";
 
-import { internalClient } from '../index';
+import { internalClient } from "../index";
 
 export const interactionCreate: EventHandler<Events.InteractionCreate> = async (
   interaction,
@@ -13,7 +13,7 @@ export const interactionCreate: EventHandler<Events.InteractionCreate> = async (
   if (!inGuild) {
     if (!interaction.isRepliable()) return;
     await interaction.reply({
-      content: 'Взаимодействие может быть использовано только на сервере.',
+      content: "Взаимодействие может быть использовано только на сервере.",
       flags: [MessageFlags.Ephemeral],
     });
     return;
@@ -37,7 +37,7 @@ export const interactionCreate: EventHandler<Events.InteractionCreate> = async (
     try {
       await interactionHandler(interaction, internalClient);
     } catch (error) {
-      logger.error(error, 'failed to handle interaction');
+      logger.error(error, "failed to handle interaction");
     }
   }
 };

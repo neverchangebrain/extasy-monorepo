@@ -1,27 +1,38 @@
-import { ChatInputCommandInteraction, MessageFlags, bold, quote } from 'discord.js';
+import {
+  type ChatInputCommandInteraction,
+  MessageFlags,
+  bold,
+  quote,
+} from "discord.js";
 
-import { careers, db, eq } from '@extasy/db';
+import { careers, db, eq } from "@extasy/db";
 
 export const careerManageActionDelete = async (
-  interaction: ChatInputCommandInteraction<'cached'>,
+  interaction: ChatInputCommandInteraction<"cached">,
 ): Promise<unknown> => {
   await interaction.deferReply({ flags: [MessageFlags.Ephemeral] });
 
-  const id = interaction.options.getString('career', true);
+  const id = interaction.options.getString("career", true);
 
   if (!id) {
     await interaction.editReply({
-      content: quote(`${interaction.user.toString()}, для обновления информации нужна указать вакансию.`),
+      content: quote(
+        `${interaction.user.toString()}, для обновления информации нужна указать вакансию.`,
+      ),
     });
     return;
   }
 
-  const [career] = await db.select().from(careers).where(eq(careers.id, id)).limit(1);
+  const [career] = await db
+    .select()
+    .from(careers)
+    .where(eq(careers.id, id))
+    .limit(1);
 
   if (!career) {
     await interaction.editReply({
       content: quote(
-        `${interaction.user.toString()}, вакансия ${bold('не найдена')} или ${bold('удалена во время запроса')}.`,
+        `${interaction.user.toString()}, вакансия ${bold("не найдена")} или ${bold("удалена во время запроса")}.`,
       ),
     });
     return;
@@ -30,7 +41,9 @@ export const careerManageActionDelete = async (
   await db.delete(careers).where(eq(careers.id, id)).returning();
 
   await interaction.editReply({
-    content: quote(`${interaction.user.toString()}, вакансия ${bold(career.name)} была удалена.`),
+    content: quote(
+      `${interaction.user.toString()}, вакансия ${bold(career.name)} была удалена.`,
+    ),
   });
 
   return;

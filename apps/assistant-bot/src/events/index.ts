@@ -1,9 +1,9 @@
-import { Events } from 'discord.js';
+import { Events } from "discord.js";
 
-import { ClientEventsMap } from '@extasy/core';
+import { ClientEventsMap } from "@extasy/core";
 
-import { interactionCreate } from './interaction-create';
-import { startupClient } from './ready';
+import { interactionCreate } from "./interaction-create";
+import { startupClient } from "./ready";
 
 export const clientEvents = new ClientEventsMap();
 

@@ -1,9 +1,14 @@
-import { MessageFlags, ModalSubmitInteraction, bold, quote } from 'discord.js';
+import {
+  MessageFlags,
+  type ModalSubmitInteraction,
+  bold,
+  quote,
+} from "discord.js";
 
-import { SendCareerCommandAccessIds } from '@extasy/config';
-import { BaseContinuity, type ContinuityHandler } from '@extasy/core';
-import { careers, db, eq } from '@extasy/db';
-import z from 'zod';
+import { SendCareerCommandAccessIds } from "@extasy/config";
+import { BaseContinuity, type ContinuityHandler } from "@extasy/core";
+import { careers, db, eq } from "@extasy/db";
+import z from "zod";
 
 const CareerManageUpdateInfoSchema = z.object({
   userId: z.string(),
@@ -17,38 +22,56 @@ const CareerManageUpdateInfoSchema = z.object({
   }),
 });
 
-type CareerManageUpdateInfoDataType = z.infer<typeof CareerManageUpdateInfoSchema>;
+type CareerManageUpdateInfoDataType = z.infer<
+  typeof CareerManageUpdateInfoSchema
+>;
 
 class CareerManageUpdateInfoModalInteraction extends BaseContinuity<
   CareerManageUpdateInfoDataType,
   ModalSubmitInteraction
 > {
-  constructor(handler: ContinuityHandler<CareerManageUpdateInfoDataType, ModalSubmitInteraction>) {
-    super(CareerManageUpdateInfoSchema, { name: 'career_manage_update_info_modal' });
+  constructor(
+    handler: ContinuityHandler<
+      CareerManageUpdateInfoDataType,
+      ModalSubmitInteraction
+    >,
+  ) {
+    super(CareerManageUpdateInfoSchema, {
+      name: "career_manage_update_info_modal",
+    });
 
     this.handler = handler;
   }
 }
 
-const careerManageUpdateInfoModalInteraction = new CareerManageUpdateInfoModalInteraction(
-  async ({ interaction, data }) => {
-    if (!SendCareerCommandAccessIds.includes(interaction.user.id) || interaction.user.id !== data.userId) {
+const careerManageUpdateInfoModalInteraction =
+  new CareerManageUpdateInfoModalInteraction(async ({ interaction, data }) => {
+    if (
+      !SendCareerCommandAccessIds.includes(interaction.user.id) ||
+      interaction.user.id !== data.userId
+    ) {
       await interaction.reply({
-        content: quote(`${interaction.user.toString()}, у тебя ${bold('нет доступа')} к этой команде.`),
+        content: quote(
+          `${interaction.user.toString()}, у тебя ${bold("нет доступа")} к этой команде.`,
+        ),
         flags: [MessageFlags.Ephemeral],
       });
       return;
     }
 
-    const name = interaction.fields.getTextInputValue('name').trim();
-    const description = interaction.fields.getTextInputValue('description').trim();
-    const role = interaction.fields.getSelectedRoles('role')!.at(0);
-    const question1 = interaction.fields.getTextInputValue('question1').trim();
-    const question2 = interaction.fields.getTextInputValue('question2').trim();
+    const name = interaction.fields.getTextInputValue("name").trim();
+    const description = interaction.fields
+      .getTextInputValue("description")
+      .trim();
+    const role = interaction.fields.getSelectedRoles("role")?.at(0);
+    const question1 = interaction.fields.getTextInputValue("question1").trim();
+    const question2 = interaction.fields.getTextInputValue("question2").trim();
 
     if (!name || !description || !role || !question1 || !question2) {
       await interaction.reply({
-        content: quote(`${interaction.user.toString()}, при создании вакансии все поля должны быть заполнены.`),
+        content: quote(
+          `${interaction.user.toString()}, при создании вакансии все поля должны быть заполнены.`,
+        ),
         flags: [MessageFlags.Ephemeral],
       });
       return;
@@ -69,7 +92,7 @@ const careerManageUpdateInfoModalInteraction = new CareerManageUpdateInfoModalIn
     if (!updatedCareer) {
       await interaction.reply({
         content: quote(
-          `${interaction.user.toString()}, вакансия ${bold('не найдена')} или ${bold('удалена во время запроса')}.`,
+          `${interaction.user.toString()}, вакансия ${bold("не найдена")} или ${bold("удалена во время запроса")}.`,
         ),
         flags: [MessageFlags.Ephemeral],
       });
@@ -77,10 +100,11 @@ const careerManageUpdateInfoModalInteraction = new CareerManageUpdateInfoModalIn
     }
 
     await interaction.reply({
-      content: quote(`${interaction.user.toString()}, данные вакансии ${bold('обновлены')}.`),
+      content: quote(
+        `${interaction.user.toString()}, данные вакансии ${bold("обновлены")}.`,
+      ),
       flags: [MessageFlags.Ephemeral],
     });
-  },
-);
+  });
 
 export default careerManageUpdateInfoModalInteraction;

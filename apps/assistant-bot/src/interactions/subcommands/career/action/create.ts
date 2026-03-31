@@ -1,9 +1,13 @@
-import { ChatInputCommandInteraction, ModalBuilder, TextInputStyle } from 'discord.js';
+import {
+  type ChatInputCommandInteraction,
+  ModalBuilder,
+  TextInputStyle,
+} from "discord.js";
 
-import careerCreateModalInteraction from '@modals/career-create';
+import careerCreateModalInteraction from "@modals/career-create";
 
 export const careerManageActionCreate = async (
-  interaction: ChatInputCommandInteraction<'cached'>,
+  interaction: ChatInputCommandInteraction<"cached">,
 ): Promise<unknown> => {
   const context = await careerCreateModalInteraction.create({
     userId: interaction.user.id,
@@ -11,54 +15,58 @@ export const careerManageActionCreate = async (
 
   const modal = new ModalBuilder()
     .setCustomId(context.customId)
-    .setTitle('Создать вакансию')
+    .setTitle("Создать вакансию")
     .addLabelComponents(
       (labelBuilder) =>
         labelBuilder
-          .setLabel('Название вакансии')
+          .setLabel("Название вакансии")
           .setTextInputComponent((textInputBuilder) =>
             textInputBuilder
-              .setCustomId('name')
+              .setCustomId("name")
               .setStyle(TextInputStyle.Short)
-              .setPlaceholder('Модератор')
+              .setPlaceholder("Модератор")
               .setRequired(true),
           ),
       (labelBuilder) =>
         labelBuilder
-          .setLabel('Роль')
+          .setLabel("Роль")
           .setRoleSelectMenuComponent((selectMenuBuilder) =>
             selectMenuBuilder
-              .setCustomId('role')
-              .setPlaceholder('Выбери роль для выдачи')
+              .setCustomId("role")
+              .setPlaceholder("Выбери роль для выдачи")
               .setMaxValues(1)
               .setRequired(true),
           ),
       (labelBuilder) =>
         labelBuilder
-          .setLabel('Описание вакансии')
+          .setLabel("Описание вакансии")
           .setTextInputComponent((textInputBuilder) =>
             textInputBuilder
-              .setCustomId('description')
+              .setCustomId("description")
               .setStyle(TextInputStyle.Paragraph)
-              .setPlaceholder('Следят за порядком в голосовых каналах, помогают участникам с вопросами по серверу')
+              .setPlaceholder(
+                "Следят за порядком в голосовых каналах, помогают участникам с вопросами по серверу",
+              )
               .setRequired(true),
           ),
       (labelBuilder) =>
         labelBuilder
-          .setLabel('Вопрос по вакансии #1')
+          .setLabel("Вопрос по вакансии #1")
           .setTextInputComponent((textInputBuilder) =>
             textInputBuilder
-              .setCustomId('question1')
+              .setCustomId("question1")
               .setStyle(TextInputStyle.Paragraph)
-              .setPlaceholder('Вы хотите модерировать голосовые или текстовые каналы?')
+              .setPlaceholder(
+                "Вы хотите модерировать голосовые или текстовые каналы?",
+              )
               .setRequired(true),
           ),
       (labelBuilder) =>
         labelBuilder
-          .setLabel('Вопрос по вакансии #2')
+          .setLabel("Вопрос по вакансии #2")
           .setTextInputComponent((textInputBuilder) =>
             textInputBuilder
-              .setCustomId('question2')
+              .setCustomId("question2")
               .setStyle(TextInputStyle.Paragraph)
               .setPlaceholder("Ознакомлены ли вы с правилами сервера и TOS'ом?")
               .setRequired(true),

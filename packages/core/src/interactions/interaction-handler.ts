@@ -108,7 +108,7 @@ export const interactionHandler = async (interaction: Interaction, client: CoreC
     const currentUserId = interaction.user.id;
     const originalUserId = interaction.message.interactionMetadata?.user.id;
 
-    if (currentUserId !== originalUserId) {
+    if (originalUserId && currentUserId !== originalUserId) {
       interaction.deferUpdate();
       return;
     }
