@@ -13,7 +13,14 @@
   "linter": {
     "enabled": true,
     "rules": {
-      "recommended": true
+      "recommended": true,
+      "correctness": {
+        "noUnusedImports": "error",
+        "noUnusedVariables": "warn"
+      },
+      "style": {
+        "useImportType": "warn"
+      }
     }
   },
   "javascript": {
