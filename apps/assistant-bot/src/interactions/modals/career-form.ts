@@ -1,7 +1,8 @@
-import type { ModalSubmitInteraction } from "discord.js";
+import { MessageFlags, quote, type ModalSubmitInteraction } from "discord.js";
 
 import { BaseContinuity, type ContinuityHandler } from "@extasy/core";
 import z from "zod";
+import { CareerFormsId } from "@extasy/config";
 
 const CareerForm = z.object({
   name: z.string(),
@@ -28,7 +29,19 @@ class CareerFormModalInteraction extends BaseContinuity<
 
 const careerFormModalInteraction = new CareerFormModalInteraction(
   async ({ interaction, data }) => {
-    // Здесь будет обработка данных из формы, например, сохранение в базу данных
+    await interaction.deferReply({ flags: [MessageFlags.Ephemeral] });
+
+    const channel = interaction.guild?.channels.cache.get(CareerFormsId);
+    if (!channel?.isTextBased()) {
+      await interaction.editReply({
+        content: quote(
+          `${interaction.user.toString()}, произошла ошибка при отправке формы.`,
+        ),
+      });
+      return;
+    }
+
+    const embed;
   },
 );
 

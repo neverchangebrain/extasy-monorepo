@@ -8,28 +8,17 @@ import {
   quote,
 } from "discord.js";
 
-import {
-  AssistantCareerEmbed,
-  SendCareerCommandAccessIds,
-} from "@extasy/config";
 import { careers, db, eq } from "@extasy/db";
 import careerFormSelectMenuInteraction from "@select-menu/string/career-form";
+
+import careerPreviewEmbed from "@constants/embeds/career-preview.json";
 
 const careerSendSubcommand = async (
   interaction: ChatInputCommandInteraction<"cached">,
 ): Promise<unknown> => {
   await interaction.deferReply({ flags: [MessageFlags.Ephemeral] });
 
-  if (!SendCareerCommandAccessIds.includes(interaction.user.id)) {
-    await interaction.editReply({
-      content: quote(
-        `${interaction.user.toString()}, у тебя ${bold("нет доступа")} к этой команде.`,
-      ),
-    });
-    return;
-  }
-
-  const embed = new EmbedBuilder(AssistantCareerEmbed);
+  const embed = new EmbedBuilder(careerPreviewEmbed);
 
   const actualCareers = await db
     .select()
@@ -60,7 +49,7 @@ const careerSendSubcommand = async (
         .setRequired(true),
     );
 
-  if (interaction.channel && interaction.channel.isSendable()) {
+  if (interaction.channel?.isSendable()) {
     await interaction.channel.send({
       embeds: [embed],
       components: [actionRow],
@@ -72,6 +61,7 @@ const careerSendSubcommand = async (
       `${interaction.user.toString()}, наборы ${bold("успешно")} отправлены.`,
     ),
   });
+  return;
 };
 
 export default careerSendSubcommand;

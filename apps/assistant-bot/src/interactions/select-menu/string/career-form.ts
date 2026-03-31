@@ -39,7 +39,7 @@ class CareerFormSelectMenuInteraction extends BaseContinuity<
 }
 
 const careerFormSelectMenuInteraction = new CareerFormSelectMenuInteraction(
-  async ({ interaction, data }) => {
+  async ({ interaction }) => {
     const selectedValue = interaction.values[0];
     if (!selectedValue) return;
 
@@ -48,6 +48,7 @@ const careerFormSelectMenuInteraction = new CareerFormSelectMenuInteraction(
       .from(careers)
       .where(eq(careers.id, selectedValue))
       .limit(1);
+
     if (!career) {
       await interaction.reply({
         content: quote(`Выбранная вакансия ${bold("не найдена")}.`),
@@ -87,9 +88,7 @@ const careerFormSelectMenuInteraction = new CareerFormSelectMenuInteraction(
             .setTextInputComponent((inputBuilder) =>
               inputBuilder
                 .setCustomId("base2")
-                .setPlaceholder(
-                  "Был админом модераторов в 2019 году, познакомится с сервером изнутри",
-                )
+                .setPlaceholder("Был админом модераторов в 2019 году")
                 .setStyle(TextInputStyle.Short)
                 .setRequired(true),
             ),
@@ -130,9 +129,10 @@ const careerFormSelectMenuInteraction = new CareerFormSelectMenuInteraction(
 
     await interaction.showModal(modal);
 
-    await interaction.message.edit({
-      components: [interaction.message.components[0]!],
-    });
+    const oldComponents = interaction.message.components.at(0);
+    if (oldComponents) {
+      await interaction.message.edit({ components: [oldComponents] });
+    }
   },
 );
 

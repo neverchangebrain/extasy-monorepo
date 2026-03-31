@@ -1,11 +1,4 @@
-import {
-  type ChatInputCommandInteraction,
-  MessageFlags,
-  bold,
-  quote,
-} from "discord.js";
-
-import { ManageCareerCommandAccessIds } from "@extasy/config";
+import type { ChatInputCommandInteraction } from "discord.js";
 
 import { careerManageActionCreate } from "./action/create";
 import { careerManageActionDelete } from "./action/delete";
@@ -20,16 +13,6 @@ const careerManageSubcommand = async (
     | "update-info"
     | "update-available"
     | "delete";
-
-  if (!ManageCareerCommandAccessIds.includes(interaction.user.id)) {
-    await interaction.reply({
-      content: quote(
-        `${interaction.user.toString()}, у тебя ${bold("нет доступа")} к этой команде.`,
-      ),
-      flags: [MessageFlags.Ephemeral],
-    });
-    return;
-  }
 
   if (action === "create") {
     await careerManageActionCreate(interaction);

@@ -1,9 +1,15 @@
-import { PermissionsBitField, SlashCommandBuilder } from "discord.js";
-
+import {
+  bold,
+  MessageFlags,
+  PermissionsBitField,
+  quote,
+  SlashCommandBuilder,
+} from "discord.js";
 import { ChatInputCommandHandler } from "@extasy/core";
 import { careers, db } from "@extasy/db";
 import careerManageSubcommand from "@subcommands/career/manage";
 import careerSendSubcommand from "@subcommands/career/send";
+import { careerAccessIds } from "@constants/access";
 
 const data = new SlashCommandBuilder()
   .setName("career")
@@ -43,6 +49,16 @@ export default new ChatInputCommandHandler(
   data,
   async (interaction) => {
     if (!interaction.inCachedGuild()) return;
+
+    if (!careerAccessIds.includes(interaction.user.id)) {
+      await interaction.reply({
+        content: quote(
+          `${interaction.user.toString()}, у вас ${bold("нет доступа")} к этой команде.`,
+        ),
+        flags: [MessageFlags.Ephemeral],
+      });
+      return;
+    }
 
     const subcommand = interaction.options.getSubcommand() as "send" | "manage";
 
