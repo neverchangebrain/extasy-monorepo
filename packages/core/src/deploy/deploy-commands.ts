@@ -1,9 +1,9 @@
-import { REST, Routes } from 'discord.js';
+import { REST, Routes } from "discord.js";
 
-import { logger } from '@extasy/logger';
+import { logger } from "@extasy/logger";
 
-import { env } from '../env';
-import { InteractionsFileManager } from '../files/interactions-file-manager';
+import { env } from "../env";
+import { InteractionsFileManager } from "../files/interactions-file-manager";
 
 export const deployCommands = async (
   token: string,
@@ -24,7 +24,7 @@ export const deployCommands = async (
     `loaded ${contextMenuMessageCommands.length} context menu message commands`,
   );
 
-  const rest = new REST({ version: '10' }).setToken(token);
+  const rest = new REST({ version: "10" }).setToken(token);
 
   const commands = [...chatInputCommands, ...contextMenuMessageCommands];
 
@@ -33,7 +33,7 @@ export const deployCommands = async (
       body: commands,
     });
 
-    logger.info(`successfully registered`);
+    logger.info("successfully registered");
   } catch (error) {
     logger.error(`error registering: ${error}`);
   }

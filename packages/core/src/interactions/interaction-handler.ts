@@ -1,14 +1,22 @@
-import { type Interaction, MessageFlags } from 'discord.js';
+import { type Interaction, MessageFlags } from "discord.js";
 
-import { logger } from '@extasy/logger';
+import { logger } from "@extasy/logger";
 
-import { ChatInputCommandHandler, ContextMenuMessageCommandHandler } from '.';
-import type { CoreClient } from '../client';
-import { BaseContinuity } from './continuity/base';
+import type {
+  ChatInputCommandHandler,
+  ContextMenuMessageCommandHandler,
+} from ".";
+import type { CoreClient } from "../client";
+import { BaseContinuity } from "./continuity/base";
 
-export const interactionHandler = async (interaction: Interaction, client: CoreClient) => {
+export const interactionHandler = async (
+  interaction: Interaction,
+  client: CoreClient,
+) => {
   if (interaction.isChatInputCommand()) {
-    const command = client.chatInputCommands.get(interaction.commandName) as ChatInputCommandHandler;
+    const command = client.chatInputCommands.get(
+      interaction.commandName,
+    ) as ChatInputCommandHandler;
 
     if (!command) return;
 
@@ -16,7 +24,7 @@ export const interactionHandler = async (interaction: Interaction, client: CoreC
       command.handler(interaction, client);
     } catch (error) {
       const payload = {
-        content: 'Ошибка при обработке взаимодействия.',
+        content: "Ошибка при обработке взаимодействия.",
         flags: [MessageFlags.Ephemeral] as const,
       };
 
@@ -26,12 +34,14 @@ export const interactionHandler = async (interaction: Interaction, client: CoreC
         await interaction.reply(payload);
       }
 
-      logger.error({ error }, 'error handling chat-input-interaction');
+      logger.error({ error }, "error handling chat-input-interaction");
     }
   }
 
   if (interaction.isAutocomplete()) {
-    const command = client.chatInputCommands.get(interaction.commandName) as ChatInputCommandHandler;
+    const command = client.chatInputCommands.get(
+      interaction.commandName,
+    ) as ChatInputCommandHandler;
 
     if (!command || !command.autocomplete) return;
 
@@ -40,12 +50,14 @@ export const interactionHandler = async (interaction: Interaction, client: CoreC
     } catch (error) {
       await interaction.respond([]);
 
-      logger.error({ error }, 'error handling autocomplete-interaction');
+      logger.error({ error }, "error handling autocomplete-interaction");
     }
   }
 
   if (interaction.isMessageContextMenuCommand()) {
-    const command = client.contextMenuMessageCommands.get(interaction.commandName) as ContextMenuMessageCommandHandler;
+    const command = client.contextMenuMessageCommands.get(
+      interaction.commandName,
+    ) as ContextMenuMessageCommandHandler;
 
     if (!command) return;
 
@@ -53,7 +65,7 @@ export const interactionHandler = async (interaction: Interaction, client: CoreC
       command.handler(interaction, client);
     } catch (error) {
       const payload = {
-        content: 'Ошибка при обработке взаимодействия.',
+        content: "Ошибка при обработке взаимодействия.",
         flags: [MessageFlags.Ephemeral] as const,
       };
 
@@ -63,14 +75,21 @@ export const interactionHandler = async (interaction: Interaction, client: CoreC
         await interaction.reply(payload);
       }
 
-      logger.error({ error }, 'error handling context-menu-message-interaction');
+      logger.error(
+        { error },
+        "error handling context-menu-message-interaction",
+      );
     }
   }
 
   if (interaction.isModalSubmit()) {
-    const continuityInteraction = BaseContinuity.decodeCustomId(interaction.customId);
+    const continuityInteraction = BaseContinuity.decodeCustomId(
+      interaction.customId,
+    );
 
-    const modalInteraction = client.modalInteractions.get(continuityInteraction.name);
+    const modalInteraction = client.modalInteractions.get(
+      continuityInteraction.name,
+    );
 
     if (!modalInteraction || !modalInteraction.handler) return;
 
@@ -79,7 +98,7 @@ export const interactionHandler = async (interaction: Interaction, client: CoreC
       await modalInteraction.handler({ client, interaction, data });
     } catch (error) {
       const payload = {
-        content: 'Ошибка при обработке взаимодействия.',
+        content: "Ошибка при обработке взаимодействия.",
         flags: [MessageFlags.Ephemeral] as const,
       };
 
@@ -89,7 +108,7 @@ export const interactionHandler = async (interaction: Interaction, client: CoreC
         await interaction.reply(payload);
       }
 
-      logger.error({ error }, 'error handling modal-submit-interaction');
+      logger.error({ error }, "error handling modal-submit-interaction");
     }
 
     return;
@@ -115,37 +134,45 @@ export const interactionHandler = async (interaction: Interaction, client: CoreC
 
     // generic button interactions
 
-    const genericButtonInteraction = client.genericButtonInteractions.get(interaction.customId);
+    const genericButtonInteraction = client.genericButtonInteractions.get(
+      interaction.customId,
+    );
 
     if (genericButtonInteraction && interaction.isButton()) {
       try {
         await genericButtonInteraction.handler(interaction, client);
       } catch (error) {
         await interaction.followUp({
-          content: 'Ошибка при обработке взаимодействия.',
+          content: "Ошибка при обработке взаимодействия.",
           flags: [MessageFlags.Ephemeral],
         });
-        logger.error({ error }, 'error handling generic-button-interaction');
+        logger.error({ error }, "error handling generic-button-interaction");
       }
       return;
     }
 
     // button interactions
 
-    const continuityInteraction = BaseContinuity.decodeCustomId(interaction.customId);
+    const continuityInteraction = BaseContinuity.decodeCustomId(
+      interaction.customId,
+    );
 
-    const buttonInteraction = client.buttonInteractions.get(continuityInteraction.name);
+    const buttonInteraction = client.buttonInteractions.get(
+      continuityInteraction.name,
+    );
 
-    if (buttonInteraction && buttonInteraction.handler && interaction.isButton()) {
+    if (buttonInteraction?.handler && interaction.isButton()) {
       try {
-        const data = await buttonInteraction.getContext(continuityInteraction.id);
+        const data = await buttonInteraction.getContext(
+          continuityInteraction.id,
+        );
         await buttonInteraction.handler({ client, interaction, data });
       } catch (error) {
         await interaction.followUp({
-          content: 'Ошибка при обработке взаимодействия.',
+          content: "Ошибка при обработке взаимодействия.",
           flags: [MessageFlags.Ephemeral],
         });
-        logger.error({ error }, 'error handling button-interaction');
+        logger.error({ error }, "error handling button-interaction");
       }
     }
 
@@ -159,14 +186,20 @@ export const interactionHandler = async (interaction: Interaction, client: CoreC
           : interaction.isRoleSelectMenu()
             ? client.roleSelectMenuInteractions.get(continuityInteraction.name)
             : interaction.isChannelSelectMenu()
-              ? client.channelSelectMenuInteractions.get(continuityInteraction.name)
+              ? client.channelSelectMenuInteractions.get(
+                  continuityInteraction.name,
+                )
               : interaction.isMentionableSelectMenu()
-                ? client.mentionableSelectMenuInteractions.get(continuityInteraction.name)
+                ? client.mentionableSelectMenuInteractions.get(
+                    continuityInteraction.name,
+                  )
                 : undefined;
 
-      if (selectMenuInteraction && selectMenuInteraction.handler) {
+      if (selectMenuInteraction?.handler) {
         try {
-          const data = await selectMenuInteraction.getContext(continuityInteraction.id);
+          const data = await selectMenuInteraction.getContext(
+            continuityInteraction.id,
+          );
 
           await selectMenuInteraction.handler({
             client,
@@ -175,10 +208,10 @@ export const interactionHandler = async (interaction: Interaction, client: CoreC
           });
         } catch (error) {
           await interaction.followUp({
-            content: 'Ошибка при обработке взаимодействия.',
+            content: "Ошибка при обработке взаимодействия.",
             flags: [MessageFlags.Ephemeral],
           });
-          logger.error({ error }, 'error handling select-menu-interaction');
+          logger.error({ error }, "error handling select-menu-interaction");
         }
       }
     }

@@ -1,5 +1,5 @@
-import type { CoreClient } from '../client';
-import { InteractionsFileManager } from '../files/interactions-file-manager';
+import type { CoreClient } from "../client";
+import { InteractionsFileManager } from "../files/interactions-file-manager";
 
 export const importInteractions = async (
   client: CoreClient,

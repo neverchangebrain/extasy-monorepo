@@ -1,22 +1,28 @@
-import { MessageComponentInteraction, ModalSubmitInteraction } from 'discord.js';
+import type {
+  MessageComponentInteraction,
+  ModalSubmitInteraction,
+} from "discord.js";
 
-import { continuity, db } from '@extasy/db';
-import { z } from 'zod';
+import { continuity, db } from "@extasy/db";
+import type { z } from "zod";
 
-import type { CoreClient } from '../../client';
+import type { CoreClient } from "../../client";
 
-export type ContinuityHandler<T = any, U extends MessageComponentInteraction | ModalSubmitInteraction = any> = (ctx: {
-  interaction: U;
-  client: CoreClient;
-  data: T;
-}) => Promise<void>;
+export type ContinuityHandler<
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  T = any,
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  U extends MessageComponentInteraction | ModalSubmitInteraction = any,
+> = (ctx: { interaction: U; client: CoreClient; data: T }) => Promise<void>;
 
 export abstract class BaseContinuity<
   T,
-  U extends MessageComponentInteraction | ModalSubmitInteraction = MessageComponentInteraction | ModalSubmitInteraction,
+  U extends MessageComponentInteraction | ModalSubmitInteraction =
+    | MessageComponentInteraction
+    | ModalSubmitInteraction,
 > {
   static decodeCustomId(customId: string) {
-    const [name, id] = customId.split(':');
+    const [name, id] = customId.split(":");
 
     if (!name || !id) {
       throw new Error(`invalid custom id: ${customId}`);
@@ -42,12 +48,14 @@ export abstract class BaseContinuity<
     });
 
     if (!result) {
-      throw new Error(`No data found for continuity in db (${this.metadata.name}:${id})`);
+      throw new Error(
+        `No data found for continuity in db (${this.metadata.name}:${id})`,
+      );
     }
 
     try {
       return this.schema.parse(result.data);
-    } catch (error) {
+    } catch {
       throw new Error(
         `Got invalid continuity data from db, validation failed:\n${JSON.stringify(result.data, null, 2)}`,
       );
@@ -62,7 +70,9 @@ export abstract class BaseContinuity<
       .then((rows) => rows[0]);
 
     if (!result) {
-      throw new Error(`Failed to create continuity context (${this.metadata.name})`);
+      throw new Error(
+        `Failed to create continuity context (${this.metadata.name})`,
+      );
     }
 
     const customId = this.encodeCustomId(result.id);

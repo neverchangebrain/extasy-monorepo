@@ -1,45 +1,45 @@
-import path from 'path';
+import path from "path";
 
 const resolveDir = (baseDir: string, dir: string) => path.join(baseDir, dir);
 
-const DEFAULT_INTERACTIONS_DIR = path.join(import.meta.dir, '../interactions');
+const DEFAULT_INTERACTIONS_DIR = path.join(import.meta.dir, "../interactions");
 
 export const getFilePaths = (interactionsDir = DEFAULT_INTERACTIONS_DIR) => ({
   // chat input commands
-  CHAT_INPUT_COMMANDS: resolveDir(interactionsDir, './commands/chat-input'),
+  CHAT_INPUT_COMMANDS: resolveDir(interactionsDir, "./commands/chat-input"),
 
   // context menu message commands
   CONTEXT_MENU_MESSAGE_COMMANDS: resolveDir(
     interactionsDir,
-    './commands/context-menu-message',
+    "./commands/context-menu-message",
   ),
 
   // button interactions
-  GENERIC_BUTTON_INTERACTIONS: resolveDir(interactionsDir, './buttons/generic'),
-  BUTTON_INTERACTIONS: resolveDir(interactionsDir, './buttons'),
+  GENERIC_BUTTON_INTERACTIONS: resolveDir(interactionsDir, "./buttons/generic"),
+  BUTTON_INTERACTIONS: resolveDir(interactionsDir, "./buttons"),
 
   // select menu interactions
   STRING_SELECT_MENU_INTERACTIONS: resolveDir(
     interactionsDir,
-    './select-menu/string',
+    "./select-menu/string",
   ),
   USER_SELECT_MENU_INTERACTIONS: resolveDir(
     interactionsDir,
-    './select-menu/user',
+    "./select-menu/user",
   ),
   ROLE_SELECT_MENU_INTERACTIONS: resolveDir(
     interactionsDir,
-    './select-menu/role',
+    "./select-menu/role",
   ),
   CHANNEL_SELECT_MENU_INTERACTIONS: resolveDir(
     interactionsDir,
-    './select-menu/channel',
+    "./select-menu/channel",
   ),
   MENTIONABLE_SELECT_MENU_INTERACTIONS: resolveDir(
     interactionsDir,
-    './select-menu/mentionable',
+    "./select-menu/mentionable",
   ),
 
   // modal interactions
-  MODAL_INTERACTIONS: resolveDir(interactionsDir, './modals'),
+  MODAL_INTERACTIONS: resolveDir(interactionsDir, "./modals"),
 });
