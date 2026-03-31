@@ -4,5 +4,6 @@
       "fileMatch": ["packages/config/src/embeds/*.json"],
       "url": "https://neverchangebrain.tech/schemas/discord-embed.json"
     }
-  ]
+  ],
+  "editor.defaultFormatter": "biomejs.biome"
 }
